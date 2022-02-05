@@ -10,6 +10,7 @@ author: Kevin McAleer
 date: 2022-02-05
 ---
 
-The Arduino is an 8 bit microcontroller that many people use to get started in robotics. This is because there are many tutorials, resources, kits and videos showing you how to connect up sensors, motors and servos.
+## What is an Arduino?
+The Arduino is an 8 bit ***microcontroller*** that many people use to get started in robotics. This is because there are many tutorials, resources, kits and videos showing you how to connect up sensors, motors and servos.
 
 The Arduino has 14 IO Pins.
