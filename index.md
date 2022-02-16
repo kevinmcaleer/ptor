@@ -3,6 +3,7 @@ layout: default
 title: The Periodic Table of Robotics
 author: Kevin McAleer
 date: 2022-02-05
+hide: true
 ---
 
 Welcome to the Periodic Table of Robotics.
