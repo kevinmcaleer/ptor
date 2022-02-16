@@ -8,6 +8,6 @@ hide: true
 
 {% include breadcrumbs.html %}
 
-Welcome to the Periodic Table of Robotics.
+# Welcome to the Periodic Table of Robotics.
 
 {% include periodic_table.html %}
