@@ -1,5 +1,5 @@
 ---
-layout: potr
+layout: ptor
 name: Ardiuno
 code: Ar
 title: Ar
