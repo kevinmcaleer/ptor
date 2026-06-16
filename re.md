@@ -35,6 +35,34 @@ You'll find resistors in values ranging from a few ohms up to megaohms (millions
 
 Resistors come in through-hole (those small cylinders with coloured stripes) and surface-mount (tiny rectangles on a PCB). Through-hole resistors are what you'll use on a breadboard. Read the value from the colour bands printed on the body.
 
+## The symbol and the bands
+
+A resistor has no polarity — it goes in either way round. On a schematic it's a zig-zag (or a plain rectangle in newer drawings), and on the physical part the **colour bands** encode its value:
+
+```
+   Schematic symbol           Reading the bands (4-band)
+
+   ──/\/\/\──   (zig-zag)      │ │ │  │
+      or                       │ │ │  └ tolerance (gold = ±5%)
+   ──▭▭▭▭──     (box)          │ │ └─── multiplier (×10ⁿ)
+                               │ └───── 2nd digit
+   no + or − : fits            └─────── 1st digit
+   either way round
+   e.g. red-red-brown-gold = 2,2 ×10 = 220 Ω, ±5%
+```
+
+## In a circuit
+
+The job you'll wire most often: a current-limiting resistor in series with an LED, protecting it (and the GPIO pin) from too much current:
+
+```mermaid
+flowchart LR
+    GPIO["GPIO pin<br/>3.3 V"] -->|"220 Ω<br/>(limits current)"| LED["LED"]
+    LED --> GND["Ground"]
+```
+
+Without that resistor the LED draws far more than the ~10 mA it wants and burns out in seconds — one cheap component standing between a working circuit and a dead LED.
+
 ## Why Robot Builders Care
 
 Your microcontroller's GPIO pins — whether on a Raspberry Pi Pico, Arduino, or ESP32 — can typically only source or sink around 10–20 mA of current. LEDs and other components will happily draw far more than that and burn themselves out (or fry the pin) without something to limit the flow.

@@ -28,6 +28,23 @@ Gears are one of those things that seem simple until you realise just how much t
 
 A gear is a toothed wheel that meshes with another toothed wheel (or a rack) to transfer rotational motion. The fundamental rule is the gear ratio: if a small 10-tooth gear drives a larger 40-tooth gear, the output spins at one quarter of the input speed — but with four times the torque.
 
+Here's that trade laid out. A small driver gear turning a larger driven gear is the classic **speed reducer** — you give up speed and gain torque in exact proportion to the tooth counts. Note the meshed gears also spin in *opposite* directions:
+
+```
+        driver (10 teeth)        driven (40 teeth)
+             ╱──╲                  ╱────────╲
+            │ ●  │ ───meshes───▶  │    ●     │
+             ╲──╱                  ╲────────╱
+            spins ↻ fast            spins ↺ slow
+
+   ratio = 40 ÷ 10 = 4 : 1
+   → output speed  = ¼ of input   (4× slower)
+   → output torque = 4× of input  (4× stronger)
+   → direction reverses (meshed gears turn opposite ways)
+```
+
+Swap which gear drives and you flip the trade: a large gear driving a small one gives you *more speed, less torque*.
+
 Common gear types you'll meet in robotics:
 
 - **Spur gears** — the classic flat-toothed wheel, easy to 3D print, ideal for parallel shafts

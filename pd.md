@@ -36,6 +36,21 @@ Here's the idea with each term:
 
 Together they give you a control loop that's reactive, accurate, and stable. Each term has a gain value (Kp, Ki, Kd) that you tune for your specific robot — a process that's part maths, part feel, and part patience.
 
+## The feedback loop
+
+PID is a closed loop. You subtract the measured value from the **setpoint** (where you want to be) to get the **error**, the three terms act on that error to produce an output, and the result is measured and fed back round — continuously closing the gap:
+
+```mermaid
+flowchart LR
+    SP["Setpoint<br/>(target)"] --> SUM(("+/−"))
+    SUM -->|"error"| PID["P + I + D<br/>(Kp, Ki, Kd)"]
+    PID -->|"output"| PROC["Robot / motor<br/>(the process)"]
+    PROC --> MEAS["Sensor<br/>(measure actual)"]
+    MEAS -->|"feedback"| SUM
+```
+
+The loop runs many times a second. P reacts to the error now, I cleans up any lingering offset, and D damps the wobble — and that feedback arrow at the bottom is what separates a robot that holds its line from one that veers off it.
+
 ## Why robot builders care
 
 The moment you need a robot to *hold a position* or *follow a path smoothly*, you need feedback control. Common examples include:

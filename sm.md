@@ -32,6 +32,21 @@ SMARS stands for **Screwless Modular Assemblable Robotic System**. It's a small 
 
 The core robot is compact — around 100mm long — and runs on two DC motors with tank-style tracks. The main board is an Arduino Uno or Nano, making it approachable for beginners. The Pico and Pico W versions (PicoSMARS) bring MicroPython and wireless connectivity into the mix. There are also quad-legged variants, mini versions, and countless community mods.
 
+## What's inside a SMARS
+
+For all its charm, SMARS is a beautifully minimal robot. A board for the brain, a motor driver, two geared motors driving the tracks, and a distance sensor up front — every part snaps into the printed chassis with no screws:
+
+```mermaid
+flowchart LR
+    BATT["Battery"] --> BOARD["Arduino / Pico<br/>(the brain)"]
+    BOARD --> DRIVER["Motor driver<br/>(H-bridge shield)"]
+    DRIVER --> ML["Left motor + track"]
+    DRIVER --> MR["Right motor + track"]
+    US["Ultrasonic sensor<br/>(front)"] --> BOARD
+```
+
+Two tracks for differential drive, one sensor to avoid walls, all held in a snap-fit printed body — that simplicity is exactly why SMARS is such a brilliant first build.
+
 ## Why robot builders care
 
 SMARS ticks nearly every box for a first robot:
