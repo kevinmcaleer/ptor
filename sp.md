@@ -43,6 +43,25 @@ Multiple devices can share the SCLK, MOSI and MISO lines, each with its own CS p
 
 Typical SPI speeds range from a few MHz up to 80 MHz on some ESP32 devices — far faster than I2C or UART, which is what makes SPI the right choice for colour TFT displays, where you push thousands of pixels every frame.
 
+## How the bus is wired
+
+The clever bit is that the clock and data lines are *shared* by every device — only the **Chip Select** line is unique per peripheral. Pull one device's CS low and it listens; the others stay quiet:
+
+```mermaid
+flowchart LR
+    MCU["Microcontroller<br/>(controller)"]
+    MCU -->|SCLK| D1["Display"]
+    MCU -->|MOSI| D1
+    D1 -->|MISO| MCU
+    MCU -->|CS1| D1
+    MCU -->|SCLK shared| SD["SD card"]
+    MCU -->|MOSI shared| SD
+    SD -->|MISO shared| MCU
+    MCU -->|CS2| SD
+```
+
+SCLK, MOSI and MISO fan out to both devices; CS1 and CS2 are the separate "are you talking to me?" lines. Add a third device and you only need one more spare GPIO pin for its CS.
+
 ## Why robot builders care
 
 You will run into SPI constantly when adding peripherals to a robot:

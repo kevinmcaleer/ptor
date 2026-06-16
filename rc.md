@@ -36,6 +36,20 @@ Key specs to know:
 - **Channels** — one per independent axis of control. A ground robot needs 2 (throttle + steering); a hexapod may need 12+.
 - **Protocol** — PWM, PPM, SBUS, and CRSF are common receiver output formats.
 
+## The control chain
+
+Every RC link follows the same path: you move a stick, the transmitter sends it over the air, the receiver on the robot decodes it, and a microcontroller turns those channels into motor and servo commands:
+
+```mermaid
+flowchart LR
+    STICK["Your thumbs<br/>(sticks)"] --> TX["Transmitter<br/>2.4 GHz"]
+    TX -.->|"radio link"| RX["Receiver<br/>on robot"]
+    RX --> MCU["Microcontroller<br/>(mixes channels)"]
+    MCU --> MOTORS["Motors / servos"]
+```
+
+The "mixing" step is where the magic happens: a single joystick's X and Y can be blended into independent left and right motor speeds, which is how a two-stick controller drives a differential-drive robot smoothly.
+
 ## Why robot builders care
 
 Most beginner robots start autonomous, then hit a wall: "how do I test it without it crashing into the cat?" RC solves that immediately. You can drive the robot manually to verify mechanics, tune motor speeds, and test sensors — all before writing a single line of autonomous code.

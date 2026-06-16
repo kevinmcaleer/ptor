@@ -34,6 +34,20 @@ The idea is simple. Devices publish messages to a named **topic** (like `robot/b
 
 A minimal MQTT message carries as little as **2 bytes** of overhead, and Quality of Service (QoS) levels handle unreliable connections gracefully — from fire-and-forget up to guaranteed delivery.
 
+## Publish and subscribe
+
+Nothing talks to anything directly. A **publisher** sends a message to a topic on the **broker**, and the broker forwards it to every **subscriber** that asked for that topic. The robot can be a publisher and a subscriber at the same time:
+
+```mermaid
+flowchart LR
+    ROBOT["Robot (Pico W)<br/>publishes<br/>robot/battery"] -->|publish| BROKER["MQTT broker<br/>(Mosquitto)"]
+    BROKER -->|forward| DASH["Laptop dashboard<br/>subscribes<br/>robot/battery"]
+    PHONE["Phone app<br/>publishes<br/>robot/cmd"] -->|publish| BROKER
+    BROKER -->|forward| ROBOT2["Robot subscribes<br/>robot/cmd"]
+```
+
+Because publishers and subscribers only ever know the broker (never each other), you can add a second dashboard, a third robot, or swap the phone for a laptop without changing a single line on the other side.
+
 ## Why robot builders care
 
 Robots produce a constant stream of data — distances, motor currents, temperatures, joint angles — and they need to receive commands in return. HTTP works fine for one-off requests, but it's clunky for continuous telemetry. MQTT is built for exactly this pattern.

@@ -36,6 +36,20 @@ There are two common ways BLE devices communicate:
 
 The **Raspberry Pi Pico W** has onboard BLE support via the CYW43439 chip, and MicroPython's `bluetooth` module makes it straightforward to use without any external modules.
 
+## Central and peripheral
+
+In a BLE link the **peripheral** advertises that it's available, and the **central** scans, finds it, and connects. For a robot, the robot is usually the peripheral and your phone or Pi is the central. With UART-over-BLE the link then behaves just like a wired serial cable:
+
+```mermaid
+flowchart LR
+    PHONE["Phone / Pi<br/>(Central)"] -->|"scans &<br/>connects"| ROBOT["Robot Pico W<br/>(Peripheral)"]
+    ROBOT -.->|"advertises<br/>UART service"| PHONE
+    PHONE -->|"commands<br/>(fwd / left…)"| ROBOT
+    ROBOT -->|"telemetry<br/>(battery, speed)"| PHONE
+```
+
+Once connected, data flows both ways over a virtual serial port — which is why so much wired-UART example code works almost unchanged over Bluetooth.
+
 ## Why robot builders care
 
 Bluetooth solves one of the most common beginner frustrations: needing a USB cable dangling from your robot every time you want to test it. With Bluetooth you can:

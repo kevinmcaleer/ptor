@@ -33,6 +33,25 @@ In output mode a pin can switch an LED on and off, drive a buzzer, or tell a mot
 
 Pins are digital by default — they deal in two states: HIGH (usually 3.3 V) and LOW (0 V). Many boards also have pins that can read analogue voltages using an analogue-to-digital converter (ADC), which turns a smoothly varying voltage into a number your code can work with.
 
+## Input and output
+
+The same pin can do two opposite jobs depending on how your code configures it. As an **output** it pushes voltage out to drive something; as an **input** it reads voltage coming in. Here are the two everyday wiring patterns — an LED on an output and a button on an input:
+
+```
+   OUTPUT — drive an LED            INPUT — read a button
+
+   GPIO ──[220Ω]──▶|── GND          3.3V ──[10kΩ]──┬── GPIO
+                   LED                              │
+                                                  [BTN]
+   pin HIGH → LED on                                │
+   pin LOW  → LED off                              GND
+
+                                    not pressed → reads HIGH
+                                    pressed     → reads LOW
+```
+
+The 10 kΩ resistor on the button is a **pull-up**: it holds the pin at a known HIGH until the button connects it to ground. Without it the pin "floats" and reads random noise — a classic beginner gotcha.
+
 ## Why robot builders care
 
 GPIO is the connection point between your software and everything physical. Without it, a robot is just a piece of code sitting idle.

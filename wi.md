@@ -38,6 +38,20 @@ For robots, the numbers that matter most are:
 
 The boards you will most likely use are the **Raspberry Pi Pico W**, the **ESP32**, and the full **Raspberry Pi** — all well supported in MicroPython and Python.
 
+## On the network
+
+Once your robot joins WiFi it gets an IP address, just like every other device on the network. Your phone or laptop reaches it through the router — no cable, and you can drive it from any browser on the same network:
+
+```mermaid
+flowchart LR
+    PHONE["Phone /<br/>laptop browser"] -->|"WiFi"| ROUTER["Router<br/>(your network)"]
+    ROUTER -->|"WiFi"| ROBOT["Robot Pico W<br/>192.168.x.x<br/>(web server)"]
+    ROBOT -->|"live sensor data"| ROUTER
+    ROUTER --> PHONE
+```
+
+The robot runs a tiny web server, so the "remote control" is just a web page it serves itself. Open its IP address in a browser and the buttons on the page send commands straight back to the robot.
+
 ## Why robot builders care
 
 WiFi removes the tether. Instead of crouching next to your robot with a USB cable to upload new code or read sensor values, you can:

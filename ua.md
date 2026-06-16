@@ -32,6 +32,35 @@ The "asynchronous" part means there's no shared clock signal. Instead, both side
 
 A typical UART frame is just a start bit, eight data bits, and a stop bit. That's it. Beautifully simple.
 
+## The crossover wiring
+
+The one rule that trips everyone up: **TX connects to RX, not TX to TX**. Each device's transmit line feeds the other's receive line, and they must share a common ground:
+
+```
+      Device A                     Device B
+   ┌───────────┐                ┌───────────┐
+   │       TX ─┼────────────────┼─▶ RX      │
+   │       RX ◀┼────────────────┼─ TX       │
+   │      GND ─┼────────────────┼─ GND      │
+   └───────────┘                └───────────┘
+        TX → RX (crossed),  GND → GND (common)
+```
+
+## One byte on the wire
+
+With no shared clock, both sides must agree on the **baud rate** in advance. The line idles HIGH, a single LOW **start bit** wakes the receiver, then 8 data bits follow, finished by a HIGH **stop bit**:
+
+```
+   idle  start │  8 data bits (LSB first)  │ stop  idle
+   ────┐       ┌───┐   ┌───┐       ┌───────┐       ┌────
+       │       │ 0 │ 1 │ 0 │ 1 1 0 │ 1   1 │       │
+       └───────┘   └───┘   └───────┘       └───────┘
+        ↑start                              ↑stop
+        bit                                 bit
+```
+
+Get the baud rate wrong and the receiver samples at the wrong moments — that's why a mismatched setup gives you garbled characters rather than silence.
+
 ## Why robot builders care
 
 UART is everywhere in robotics. GPS modules, GSM shields, LiDAR sensors, servo driver boards — a huge number of peripherals speak UART because it needs so few pins and works reliably over short cable runs.
