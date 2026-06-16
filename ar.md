@@ -35,6 +35,32 @@ The real magic is the ecosystem. Thousands of ready-made libraries handle everyt
 
 Modern Arduinos go well beyond the original Uno. The Nano ESP32 adds WiFi and Bluetooth. The Uno R4 Minima and WiFi bring a 32-bit ARM core. There's even the MKR family for IoT work. The family keeps growing, but the core idea stays the same: easy hardware access, approachable code.
 
+## The Uno at a glance
+
+The classic Uno layout is worth knowing because almost every shield and tutorial assumes it. Digital pins run along one long edge, analogue inputs and power along the other, with the USB and barrel jack at one end:
+
+```
+        USB    barrel
+       ┌──┐    ┌──┐
+   ┌───┴──┴────┴──┴──────────────────────┐
+   │   digital pins  D0 ─────────── D13   │  ← ~ = PWM
+   │      ~3 ~5 ~6  ~9 ~10 ~11            │    (6 PWM pins)
+   │                                      │
+   │            ┌──────────┐              │
+   │            │ ATmega328│              │
+   │            │  16 MHz  │              │
+   │            └──────────┘              │
+   │                                      │
+   │  power: 5V 3V3 GND VIN               │
+   │  analog in:  A0 A1 A2 A3 A4 A5       │  ← A4/A5 = I2C
+   └──────────────────────────────────────┘
+
+   14 digital I/O (6 PWM)  ·  6 analog inputs
+   programmed in C/C++ via the Arduino IDE
+```
+
+The two-function structure of an Arduino sketch mirrors this simplicity: `setup()` runs once when the board powers on, then `loop()` repeats forever — reading those pins and driving them in response.
+
 ## Why robot builders care
 
 Arduino sits at the sweet spot between "too simple to be useful" and "too complex to start." You get direct hardware control — PWM outputs for motor speed, analogue inputs for distance sensors, digital pins for bumpers — without an operating system getting in the way. That matters when you need a motor to respond within milliseconds, not whenever Linux gets round to it.

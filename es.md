@@ -35,6 +35,28 @@ The chip family has grown since the original. The ESP32-S3 adds faster cores and
 
 You can program it with Arduino-style C++, MicroPython, or CircuitPython. Development boards like the DOIT DevKit, the Wemos D32, and the M5Stack family expose all those pins in a breadboard-friendly form, so you're never far from getting code running.
 
+## What's on the chip
+
+The thing that sets the ESP32 apart is how much sits *inside* one chip. Two CPU cores, the radios for WiFi and Bluetooth, and all the usual robot peripherals — no add-on modules required:
+
+```mermaid
+flowchart TB
+    subgraph ESP32["ESP32 SoC"]
+        C0["Core 0<br/>(often runs WiFi)"]
+        C1["Core 1<br/>(your code)"]
+        WIFI["WiFi 802.11 b/g/n"]
+        BT["Bluetooth + BLE"]
+        PERIPH["GPIO · PWM · ADC<br/>I2C · SPI · UART"]
+    end
+    C1 --> PERIPH
+    C0 --> WIFI
+    C0 --> BT
+    PERIPH --> ROBOT["Motors, sensors,<br/>servos"]
+    WIFI --> NET["Phone / dashboard /<br/>MQTT broker"]
+```
+
+Running the network stack on one core while your control loop runs on the other is the ESP32's superpower — your robot can stay responsive even while it's busy talking over WiFi.
+
 ## Why robot builders care
 
 Most microcontrollers make you add a separate WiFi or Bluetooth module if you want wireless — that's extra components, extra wiring, and extra things to go wrong. The ESP32 skips all of that. You can stream sensor data to a dashboard, receive commands over MQTT, or connect to a mobile app without touching a single extra chip.

@@ -41,6 +41,29 @@ The headline specs are genuinely impressive for the price:
 
 The Pico W adds 2.4 GHz WiFi (and Bluetooth on the Pico 2W), turning your robot into a wirelessly connected machine for about £6.
 
+## The board at a glance
+
+The Pico has a column of GPIO pins down each long edge, the USB port and BOOTSEL button at one end, and the RP2040 chip in the middle. Power and ground are spread along both sides so a sensor is never far from what it needs:
+
+```
+                     ┌─── USB ───┐
+              ┌──────┴───────────┴──────┐
+        GP0 ──┤1                      40├── VBUS (5V in)
+        GP1 ──┤2                      39├── VSYS
+        GND ──┤3        ┌────────┐    38├── GND
+        GP2 ──┤4        │ RP2040 │    37├── 3V3_EN
+        GP3 ──┤5        │  dual  │    36├── 3V3 (out)
+        ...   │         │  core  │      │  ...
+              │         └────────┘      │
+       GP15 ──┤20  [BOOTSEL]         21├── GP16
+              └─────────────────────────┘
+
+   26 × GPIO  ·  3 × ADC (GP26–28)  ·  PWM on every pin
+   I2C / SPI / UART available on many pins
+```
+
+Hold **BOOTSEL** while plugging in USB and the Pico appears as a drive — drag a `.uf2` on and it reprograms itself. That's the whole flashing process.
+
 ## Why robot builders care
 
 Microcontrollers are the right tool for real-time control. When your robot needs to read an ultrasonic sensor every 10 ms, pulse a servo at exactly 50 Hz, and spin two DC motors at different speeds — all at once — a microcontroller handles that without flinching.

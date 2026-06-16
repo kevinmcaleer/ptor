@@ -32,6 +32,25 @@ The BBC micro:bit is a small ARM-based microcontroller board originally develope
 
 You program it in MicroPython, JavaScript Blocks, or the web-based MakeCode editor — no drivers, no toolchain setup, just drag-and-drop in a browser or type Python into the online editor and hit download. Plug in via USB, copy the file across, done.
 
+## What's on the board
+
+Almost everything you need for a first robot is already built in. The front carries the LED grid and two buttons; sensors and the radio live on the board itself; the gold-fingered edge connector along the bottom breaks out the GPIO for motors and servos:
+
+```
+   ┌──────────────────────────────┐
+   │  [A]   ● ● ● ● ●        [B]   │  ← 2 buttons +
+   │        ● ● ● ● ●              │    5×5 LED matrix
+   │        ● ● ● ● ●              │
+   │        ● ● ● ● ●              │  on-board (not shown):
+   │        ● ● ● ● ●              │  accelerometer, compass,
+   │                              │  mic, speaker, BLE radio
+   └──┬─┬─┬──────────┬─┬─┬─┬─┬─┬──┘
+      0 1 2          3V GND  …  ← edge connector
+      └─ GPIO: motors, servos, sensors ─┘
+```
+
+The radio is the standout for robots: two micro:bits can talk to each other straight out of the box, so one becomes a handheld controller and the other the robot — no WiFi setup, no pairing faff.
+
 ## Why robot builders care
 
 The micro:bit is a brilliant first brain for a robot. The onboard accelerometer means you can tilt it to steer. The radio lets two micro:bits talk to each other, so you can build a hand-held controller for your chassis without touching WiFi config. The edge connector has GPIO pins for motors, servos, and sensors — attach an expansion board and you have a full robotics platform in minutes.

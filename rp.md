@@ -39,6 +39,29 @@ Key specs (Raspberry Pi 5, 4 GB model):
 - **Connectivity:** Gigabit Ethernet, dual-band WiFi, Bluetooth 5.0
 - **Camera:** 2× MIPI camera connectors
 
+## A computer, not just a chip
+
+The difference between a Pi and a microcontroller is the **operating system** in the middle. On a Pico your code runs directly on the metal; on a Pi, Linux sits underneath and lets a vision pipeline, a web server and your robot code all run at once — while the same 40-pin GPIO header still drives motors and reads sensors:
+
+```mermaid
+flowchart TB
+    subgraph PI["Raspberry Pi"]
+        OS["Linux OS<br/>(Raspberry Pi OS)"]
+        VISION["Vision /<br/>AI / ROS"]
+        WEB["Web server /<br/>database"]
+        CODE["Your robot<br/>code (Python)"]
+    end
+    OS --- VISION
+    OS --- WEB
+    OS --- CODE
+    CAM["Pi Camera"] --> VISION
+    CODE --> GPIO["40-pin GPIO"]
+    GPIO --> HW["Motors · servos ·<br/>sensors"]
+    OS --> NET["WiFi / Ethernet"]
+```
+
+That's why the Pi is the brain of choice when a robot needs to *think* — recognising faces, planning routes, or chatting to an LLM — rather than just react.
+
 ## Why robot builders care
 
 The Pi shines when your robot needs to *think*. Computer vision, object detection, running ROS, talking to an LLM, streaming video — these all need real compute, a proper OS, and decent RAM. A microcontroller can't touch that.
