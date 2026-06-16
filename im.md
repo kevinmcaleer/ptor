@@ -34,6 +34,28 @@ An **Inertial Measurement Unit** (IMU) is a small chip that combines two or thre
 
 The most common hobby IMUs are the **MPU-6050** (6-axis, around £1–£2) and the **BNO055** (9-axis with onboard fusion processor). Both communicate over **I2C**, which means you only need two wires to connect one to a Raspberry Pi Pico or Arduino.
 
+## The three axes
+
+Every reading the IMU gives you is measured along (or around) three axes. The accelerometer measures *acceleration along* X, Y and Z; the gyroscope measures *rotation around* them — often called roll, pitch and yaw:
+
+```
+              Z (up)
+              │
+              │        Yaw   = rotation around Z (turning left/right)
+              │        Pitch = rotation around Y (nose up/down)
+              │        Roll  = rotation around X (tilting sideways)
+              │
+              └─────────── Y
+             ╱
+            ╱
+           X  (forward)
+
+   At rest, the Z accelerometer reads ~1 g — that's
+   gravity, and it tells the robot which way is "up".
+```
+
+The accelerometer is steady but noisy; the gyro is smooth but drifts over time. Blend them with a complementary or Kalman filter and you get an angle that's both stable and drift-free.
+
 Raw accelerometer data is noisy and raw gyro data drifts over time. In practice you combine both using a **complementary filter** or a **Kalman filter** to get smooth, reliable angle readings — the filter blends the gyro's short-term precision with the accelerometer's long-term accuracy.
 
 ## Why robot builders care

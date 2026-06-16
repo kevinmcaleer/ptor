@@ -36,6 +36,40 @@ distance (cm) = (echo time in microseconds) / 58
 
 The HC-SR04 is the sensor you'll find on almost every beginner robot. It has four pins: `VCC`, `GND`, `Trig`, and `Echo`. Pull `Trig` high for 10 microseconds to fire, then time how long `Echo` stays high. Measuring range is roughly 2 cm to 400 cm, with accuracy around ±3 mm on a good day. At under £2 a unit, it's hard to beat.
 
+## How it works
+
+The sensor fires a burst of sound, it bounces off an obstacle, and the echo returns. Because the sound travels *there and back*, you halve the round-trip time to get the actual distance:
+
+```
+   HC-SR04                          Wall
+   ┌──────┐   ))) ping out  →→→→→  │
+   │ Trig │                        │
+   │ Echo │   ((( echo back ←←←←←  │
+   └──────┘                        │
+           |←──── distance ─────→|
+
+   round trip = distance × 2,  so:
+   distance (cm) = echo_time_µs / 58
+```
+
+## The four pins and timing
+
+VCC and GND power it; **Trig** starts a measurement and **Echo** reports the result by going high for as long as the round trip takes:
+
+```
+   ┌─────────────────┐
+   │  VCC Trig Echo GND │
+   └───┬───┬────┬───┬──┘
+       │   │    │   │
+      5V  out   in  0V
+
+   Trig:  ──┐ ┌──────────────   (10 µs pulse to start)
+            └─┘
+   Echo:  ──────┐         ┌───   (HIGH = round-trip time)
+                └─────────┘
+                |← time   →|
+```
+
 ## Why robot builders care
 
 Without distance sensing, your robot crashes. Constantly. An ultrasonic sensor gives your robot the ability to detect obstacles before it hits them, so you can write logic to stop, turn, and find a new path.

@@ -32,6 +32,21 @@ Resolution matters, but frame rate matters just as much for a moving robot. For 
 
 Libraries like OpenCV give you the tools to process what the camera captures: detect edges, find contours, track objects by colour, or feed frames into a machine-learning model. CVZone builds on top of OpenCV and makes common computer-vision tasks (hand tracking, pose estimation, face detection) accessible with just a few lines of Python.
 
+## The vision pipeline
+
+Raw pixels on their own don't steer a robot — they have to be turned into a decision. Almost every camera robot follows the same chain: capture a frame, process it to find something meaningful, then act on what was found:
+
+```mermaid
+flowchart LR
+    CAM["Camera<br/>(captures frames)"] --> FRAME["Frame<br/>(image array)"]
+    FRAME --> PROC["OpenCV / model<br/>(find object,<br/>face, colour…)"]
+    PROC --> DECISION["Decision<br/>(where is it?)"]
+    DECISION --> ACTION["Robot action<br/>(turn / follow)"]
+    ACTION --> CAM
+```
+
+That final arrow back to the camera is the important one — it's a loop. The robot acts, the scene changes, the next frame comes in, and round it goes many times a second. That's what lets a robot smoothly *follow* a face or a coloured ball rather than just spot it once.
+
 ## Why robot builders care
 
 Vision is the richest sensor a robot can have. A single camera gives you colour, distance cues, shape recognition, and motion detection — all at once. Compare that to an ultrasonic sensor, which only tells you there's something 30 cm ahead, or an infrared sensor, which just sees a line on the floor. A camera tells you *what* is ahead, not just *that* something is there.

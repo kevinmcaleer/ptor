@@ -30,6 +30,28 @@ LiDAR stands for **Light Detection and Ranging**. A small motor spins a laser em
 
 The result is a continuous stream of distance readings arranged around a 360° ring — a **point cloud**. Affordable units like the RPLidar A1 produce 2,000–4,000 samples per rotation with a range of up to 8 metres — for a hobby robot, the cheap spinning disc does the job brilliantly.
 
+## A spinning ring of measurements
+
+As the laser sweeps round, each pulse records the distance to whatever it hits at that angle. Stitch all the angles together and you get a top-down outline of the room — distances in every direction at once, not just straight ahead:
+
+```
+            wall (28 cm)
+        · · · · · · · · · ·
+      ·                     ·
+    ·     ↖   ↑   ↗           ·  wall
+    ·   ←    [L]    →         ·  (1.1 m
+    ·     ↙   ↓   ↘           ·   behind)
+      ·                     ·
+        · · · · · · · · · ·
+   [L] = LiDAR spinning at 5–10 Hz
+    ·  = a returned distance sample (a point)
+
+   Each spoke = one laser pulse + its echo time.
+   2,000+ spokes per rotation = a full 360° point cloud.
+```
+
+Where a single ultrasonic sensor sees one direction, the LiDAR hands your robot the whole room at once — which is exactly what map-building and path-planning need.
+
 LiDAR is unaffected by ambient light levels, which makes it far more reliable than cameras in dark or glare-heavy environments.
 
 ## Why robot builders care

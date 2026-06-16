@@ -33,6 +33,25 @@ Infrared (IR) is light just beyond the red end of the visible spectrum, with wav
 
 Most IR reflectance modules are 3-pin (VCC, GND, signal) and cost well under a pound. Obstacle-detection modules typically add a potentiometer so you can tune the detection distance.
 
+## How reflectance sensing works
+
+A reflectance module sits an IR LED next to a photodetector, both pointing at the surface. A **pale surface bounces lots of light back** (detector sees plenty → one logic level); a **dark line absorbs it** (detector sees little → the other level). That difference is how a robot "sees" a black line on white card:
+
+```
+   Over WHITE card              Over BLACK line
+
+   IR LED  detector            IR LED  detector
+     \\      //                   \\      ::
+      \\    //  lots of            \\     ::  little
+       \\  //   bounce             \\     ::  bounce
+   ════╲╳╱════════ white       ════█████████ black line
+                                   (absorbs IR)
+
+   detector: strong signal      detector: weak signal
+```
+
+Mount two of these side by side under the chassis and the robot can tell whether the line is drifting left or right, then steer to stay centred.
+
 ## Why robot builders care
 
 IR sensors punch above their weight for the price:

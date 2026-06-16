@@ -30,6 +30,21 @@ GPS — the Global Positioning System — is a network of satellites orbiting ab
 
 The result is a stream of NMEA sentences: small text messages arriving over a serial (UART) connection, containing latitude, longitude, altitude, speed, heading, and satellites in view. A common module like the u-blox NEO-6M outputs these at 1–10 Hz — plenty for an outdoor rover.
 
+## How a fix is found
+
+Each satellite broadcasts a precise time signal. By comparing the tiny delays from several satellites at once, the module works out its distance to each one — and where those distance-spheres overlap is your position. It takes a minimum of **four** satellites to pin down latitude, longitude and altitude:
+
+```mermaid
+flowchart TD
+    S1["Satellite 1"] -->|"distance"| GPS["GPS module"]
+    S2["Satellite 2"] -->|"distance"| GPS
+    S3["Satellite 3"] -->|"distance"| GPS
+    S4["Satellite 4"] -->|"distance"| GPS
+    GPS -->|"NMEA over UART"| ROBOT["Robot<br/>lat / lon / alt"]
+```
+
+More satellites in view means a tighter fix — which is why a clear view of the sky gives you 2–5 m accuracy, while tree cover or tall buildings, which block satellites, push that out to tens of metres.
+
 Accuracy depends on conditions: a clear sky view gives you 2–5 metres, while tree cover or tall buildings can degrade that to tens of metres. For a garden rover that is usually fine; for centimetre-level work you need RTK GPS, which corrects the signal in real time.
 
 The modules are cheap, too. A NEO-6M breakout costs under £10, connects via UART, runs on 3.3 V or 5 V, and comes with a small patch antenna.
