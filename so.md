@@ -34,6 +34,25 @@ The kit you need is modest: a temperature-controlled iron (a cheap fixed-temp on
 
 A good joint takes about two to three seconds. A cold joint (dull, grainy, grey) means the parts weren't hot enough — reheat it and add a tiny bit of fresh solder.
 
+## What a good joint looks like
+
+A healthy joint is shiny and forms a smooth volcano-like cone that *wets* onto both the pad and the component leg. A cold or bad joint sits in a dull ball that hasn't flowed — it'll work loose or fail intermittently later:
+
+```
+        GOOD JOINT                    COLD / BAD JOINT
+
+           │ leg                         │ leg
+          ╱ ╲  shiny, smooth            (●)  dull blob,
+         ╱   ╲  concave cone           ╱   ╲  ball-shaped,
+    ════╱═════╲════ pad            ════╱  ✗  ╲════ pad
+       copper pad                    didn't wet to pad
+
+   solder flowed onto BOTH        solder sits ON TOP,
+   pad and leg = strong bond      poor electrical contact
+```
+
+The golden rule that produces good joints: heat the *joint* (pad and leg together) with the iron, then touch the solder to the joint — not to the iron tip. Let the hot metal melt the solder, and it'll flow exactly where you want it.
+
 ## Why robot builders care
 
 Breadboards are brilliant for prototyping, but they loosen over time and connectors can pull free mid-run. A soldered joint is permanent and reliable. The moment you solder your first circuit, your projects level up:

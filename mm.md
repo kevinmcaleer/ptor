@@ -34,6 +34,26 @@ A multimeter measures three fundamental electrical quantities:
 
 Most meters also include a **continuity mode** that beeps when two points are connected, and a **diode test** mode. Budget multimeters start at around £8–£15 and are perfectly capable for hobby robotics.
 
+## How to connect the probes
+
+This trips up nearly every beginner. To measure **voltage** you place the probes *across* the component (in parallel). To measure **current** you have to break the circuit and put the meter *in line* (in series) so the current flows through it:
+
+```
+   VOLTAGE — probes in parallel      CURRENT — meter in series
+
+      +────[ load ]────+               +────[ load ]──┐
+      |       │        |               |              │
+      |    (red)(black) |              (+)         ┌──(A)──┐
+     (+)      │  │     (−)            Battery      red    black
+   Battery   ┌──────┐  GND             |          └───────┘
+      |      │  V   │   |              +──────────────┘
+      └──────│ meter│───┘
+             └──────┘            break the loop, current
+   meter sits across the load    flows THROUGH the meter
+```
+
+Two warnings worth tattooing on your bench: never put the meter in *current* mode across a battery (a near short — it can blow the meter's fuse), and always move the red lead back to the voltage socket when you're done measuring current.
+
 ## Why robot builders care
 
 Robots are full of things that can go wrong electrically. A motor that won't spin might have a dead battery, a broken wire, a blown fuse, or a fried motor driver — all of which look identical to the naked eye. A multimeter cuts through the guesswork.

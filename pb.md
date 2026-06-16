@@ -34,6 +34,21 @@ Modern PCB design tools are free and surprisingly accessible. **KiCad** is the m
 
 A two-layer board (top and bottom copper) is enough for almost every robot project. You place components like resistors, microcontrollers, motor drivers, and connectors on the schematic first, then move to the layout view to arrange them physically and draw the copper traces.
 
+## The design workflow
+
+Every PCB follows the same path from idea to a board in your hand. The schematic captures *what connects to what*; the layout decides *where it physically sits*; the Gerbers are the manufacturing files the fab house actually prints:
+
+```mermaid
+flowchart LR
+    A["Schematic<br/>capture<br/>(wire up symbols)"] --> B["PCB layout<br/>(place parts +<br/>route copper)"]
+    B --> C["Design rule<br/>check (DRC)"]
+    C --> D["Export<br/>Gerber files"]
+    D --> E["Order from<br/>fab (JLCPCB,<br/>PCBWay…)"]
+    E --> F["Solder +<br/>test the board"]
+```
+
+Run the **design rule check** before you export — it catches tracks that are too close together or pads that aren't connected, which is far cheaper to fix on screen than after you've paid for five boards.
+
 ## Why robot builders care
 
 A custom PCB transforms a one-off prototype into something repeatable. You can build five identical robots without re-wiring each one. Connections are solid — no breadboard slop, no jumper pin wiggling loose mid-run. You can also add mounting holes that line up exactly with your chassis, integrate status LEDs, and expose only the connectors you actually need.

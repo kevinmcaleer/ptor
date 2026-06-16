@@ -32,6 +32,23 @@ In practical terms, it's the study of the parts on your circuit board and how th
 
 You don't need a physics degree to get started. Most robot builders work at the component level: reading a datasheet, choosing the right resistor, wiring up a sensor breakout board. That's entirely learnable with a breadboard and a multimeter.
 
+## How it fits together
+
+Every robot's electronics break down into the same handful of blocks. Power feeds the brain and the muscles; sensors feed information *in*; the microcontroller decides; drivers turn tiny logic signals into real-world motion:
+
+```mermaid
+flowchart LR
+    BATT["Battery"] --> REG["Voltage<br/>regulator"]
+    REG --> MCU["Microcontroller<br/>(the brain)"]
+    SENSE["Sensors<br/>(distance, IMU…)"] --> MCU
+    MCU --> DRV["Motor driver /<br/>transistors"]
+    DRV --> MOT["Motors &<br/>actuators"]
+    REG --> SENSE
+    REG --> DRV
+```
+
+Learn what each block does and almost any robot schematic becomes readable — you're just looking at these same pieces wired up in a particular way.
+
 ## Why robot builders care
 
 Electronics underpins almost every other topic in this Periodic Table. Without it you can't:

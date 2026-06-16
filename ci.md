@@ -37,6 +37,36 @@ Most real robot circuits mix both arrangements.
 
 A few numbers worth knowing early on: most microcontroller GPIO pins run at **3.3 V** and can safely source or sink around **10–16 mA**. That's enough to blink an LED (with a series resistor) but not enough to drive a motor directly — you need a driver chip or transistor in between. Getting comfortable with these limits saves a lot of burnt pins.
 
+## Series and parallel
+
+The two ways to connect components. In **series** the same current passes through everything in a single line; in **parallel** each branch sees the full voltage and current splits between them:
+
+```
+        SERIES                          PARALLEL
+
+   +────[R1]────[R2]────+        +───────┬───────┬───────+
+   |                    |        |       |       |       |
+  (+)                  (−)      (+)    [R1]    [R2]     (−)
+  Battery            Battery   Battery  |       |     Battery
+   |                    |        |      |       |       |
+   +────────────────────+        +──────┴───────┴───────+
+
+  one path, same current      multiple paths, same voltage
+  break it anywhere = dead    one branch fails, others live
+```
+
+## The loop
+
+Every working circuit is a closed loop: power leaves the battery's positive terminal, flows through the load, and returns to the negative terminal. Break that loop at any point and current stops:
+
+```mermaid
+flowchart LR
+    POS["Battery +"] --> R["Resistor<br/>(limits current)"]
+    R --> LOAD["LED / load"]
+    LOAD --> NEG["Battery −"]
+    NEG --> POS
+```
+
 ## Why robot builders care
 
 You cannot debug a robot without understanding circuits. When your motor twitches once and dies, or your sensor reads garbage, the fault is almost always in the circuit — a loose wire, a missing pull-up resistor, a shared ground that isn't actually connected.

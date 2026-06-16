@@ -36,6 +36,64 @@ The two most common types you will meet are:
 
 Transistors are also the building block of logic gates — which is how computers (and microcontrollers) actually think.
 
+## The symbol and pins
+
+Every transistor has three legs. On a BJT they're the **Base** (the control pin), the **Collector**, and the **Emitter**. The little arrow tells you the type — it sits on the emitter and points *out* for an NPN, and *in* for a PNP:
+
+```
+        NPN                         PNP
+                                
+        C (Collector)               C (Collector)
+        |                           |
+        |                           |
+  B ----|                     B ----|
+ (Base) |\                   (Base) |/
+        | \                         | \
+        |  v                        |  ^
+        |                           |
+        E (Emitter)                 E (Emitter)
+    arrow points OUT            arrow points IN
+   (current flows out)        (current flows in)
+```
+
+A handy way to remember it: **N**PN = "**N**ot **P**ointing i**N**" — the arrow points away from the base.
+
+A MOSFET does the same switching job but its three pins have different names: the **Gate** (control), the **Drain**, and the **Source**. The gate is voltage-controlled and electrically isolated, so it draws almost no current from your GPIO pin:
+
+```
+   N-channel MOSFET (enhancement)
+
+        D (Drain)
+        |
+        |
+  G ----| |        G = Gate   (control voltage)
+(Gate)  | |---+     D = Drain  (load side)
+        | |   |     S = Source (ground side)
+        |     v
+        |
+        S (Source)
+```
+
+For switching a motor or LED strip from a microcontroller, you wire it as a **low-side switch**: the load sits between the positive rail and the Drain, the Source goes to ground, and your GPIO pin drives the Gate (through a resistor) to turn it on.
+
+## In a circuit
+
+Here's the classic way a transistor lets a 3.3 V GPIO pin switch a much hungrier motor. The flyback diode across the motor catches the voltage spike when the motor switches off — leave it out and that spike can destroy the transistor:
+
+```mermaid
+flowchart LR
+    GPIO["GPIO pin<br/>3.3 V"] -->|"1 kΩ"| BASE["Base / Gate"]
+    VBAT["Battery +"] --> MOTOR["Motor"]
+    MOTOR --> COLL["Collector / Drain"]
+    BASE --> Q(["Transistor"])
+    COLL --> Q
+    Q --> EMIT["Emitter / Source"]
+    EMIT --> GND["Ground"]
+    MOTOR -.->|"flyback diode<br/>(cathode to +)"| VBAT
+```
+
+When the GPIO pin goes high, the transistor turns on, current flows through the motor, and it spins. When the pin goes low, the transistor switches off. A tiny signal controlling a big load — that's the whole trick.
+
 ## Why robot builders care
 
 Every time a Raspberry Pi Pico tells a motor to spin, a transistor — or many of them — is doing the heavy lifting. A GPIO pin can only source a few milliamps. A motor needs hundreds. A transistor bridges that gap.

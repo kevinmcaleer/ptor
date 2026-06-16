@@ -33,6 +33,27 @@ The two long rails running down each side carry power (usually 3.3 V or 5 V) and
 
 A full-size breadboard has 830 tie points. Mini breadboards (170 tie points) are compact enough to sit right next to a Raspberry Pi Pico.
 
+## How the holes connect
+
+This is the one thing worth burning into memory: the **power rails** run the *length* of the board, while the **terminal strips** in the middle connect in short *vertical* groups of five, broken by the central channel. Lines below show which holes are joined together:
+
+```
+   + ═══════════════════════════════  ← red rail  (e.g. 3.3 V), all joined
+   − ═══════════════════════════════  ← blue rail (GND), all joined
+
+     a  b  c  d  e        f  g  h  i  j
+   1 ●──●──●──●──●        ●──●──●──●──●   each column a–e is one
+   2 ●──●──●──●──●        ●──●──●──●──●   net; f–j is a separate
+   3 ●──●──●──●──●        ●──●──●──●──●   net. The gap in the
+   4 ●──●──●──●──●        ●──●──●──●──●   middle is the channel
+   5 ●──●──●──●──●        ●──●──●──●──●   an IC straddles.
+            ↑                  ↑
+       a–e joined         f–j joined
+       (same column)      (same column)
+```
+
+Plug two component legs into the same column (say `1a` and `1c`) and they're electrically connected. Span the central channel and the two halves stay separate — which is exactly why a chip's left and right pins don't short together.
+
 ## Why robot builders care
 
 Breadboards belong on every maker's workbench, at every skill level. Here is why:

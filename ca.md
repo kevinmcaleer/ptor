@@ -36,6 +36,38 @@ There are two main types to know:
 
 Supercapacitors (or "ultracapacitors") take things further still — they can store enough energy to act as a short-term backup power source for a robot.
 
+## The symbol and pins
+
+Capacitors come in two flavours on a schematic. A ceramic (non-polarised) cap is two straight plates — it goes in either way round. An electrolytic cap has one curved plate marking the negative side, and that pin **must** go to the more negative point in your circuit or it can fail (sometimes spectacularly):
+
+```
+  Ceramic (non-polarised)        Electrolytic (polarised)
+
+      |   |                            +  |  )
+  ----+   +----                    -------+  )-------
+      |   |                            -  |  )
+   either way round              + leg long, - leg has
+                                  the stripe on the body
+```
+
+The longer leg on an electrolytic is the **positive (+)** terminal; the shorter leg, marked with a stripe down the side of the can, is the **negative (−)** terminal.
+
+## In a circuit
+
+The two jobs you'll use most: a decoupling cap sitting right across a chip's power pins, and a smoothing cap across a motor to soak up its electrical noise before it reaches your microcontroller:
+
+```mermaid
+flowchart LR
+    VCC["VCC (+)"] --> CHIP["Microcontroller"]
+    CHIP --> GND["GND (−)"]
+    VCC -.->|"100 nF<br/>decoupling cap"| GND
+    BATT["Battery +"] --> MOTOR["DC Motor"]
+    MOTOR --> BGND["Battery −"]
+    MOTOR -.->|"100 nF across<br/>motor terminals"| MOTOR
+```
+
+Keep decoupling caps as close to the chip's power pin as possible — the shorter the leads, the better they smooth out the rapid current spikes a busy microcontroller creates.
+
 ## Why robot builders care
 
 Motors are electrically noisy. Every time a DC motor starts, stops, or changes speed, it creates a voltage spike that can crash your microcontroller or corrupt sensor readings. A capacitor placed across the motor terminals absorbs that spike before it travels up the power rail.

@@ -45,6 +45,24 @@ That's it. No calculus. No magic. Just multiply or divide.
 
 A 5 V supply pushing current through a 220 Ω resistor produces roughly 23 mA of current — just right to light an LED without burning it out. Swap in a 100 Ω resistor by mistake and you get 50 mA. The LED pops. Ohm's Law would have warned you.
 
+## The Ohm's Law triangle
+
+The fastest way to remember all three forms is the magic triangle. Cover the value you want with your thumb, and the layout of the other two tells you whether to multiply or divide:
+
+```
+        ┌───────────┐
+        │     V     │     Cover V  →  I × R
+        │  ───────  │     Cover I  →  V ÷ R
+        │   I  │  R │     Cover R  →  V ÷ I
+        └───────────┘
+
+   V = Voltage (volts)
+   I = Current (amps)
+   R = Resistance (ohms)
+```
+
+Side by side (V on top, I and R underneath) means multiply. One value stacked over another (a fraction bar between them) means divide.
+
 ## Why robot builders care
 
 Robotics mixes power electronics with delicate logic. You're constantly asking questions like:
