@@ -33,6 +33,26 @@ Inverse kinematics is the maths that works backwards from a target position to t
 
 A robot arm has several joints — shoulder, elbow, wrist — each driven by a servo or motor. **Forward kinematics** asks "if I set these joint angles, where does the tip end up?" **Inverse kinematics** flips that question: "given the tip needs to be *here*, what should the joint angles be?"
 
+Here's a 2-link arm laid out. The two segment lengths (`l1`, `l2`) and the two joint angles (`a1`, `a2`) are everything the maths needs to place the tip at a target `(x, y)`:
+
+```
+                       ● tip at (x, y)
+                      /
+                 l2  /
+                    /
+        a2 ╮  ●────╯  elbow joint
+              \
+          l1   \
+                \
+        a1 ╮     ● shoulder (base, at origin)
+   ─────────────┴───────────────  ground
+
+   l1, l2 = segment lengths      a1 = shoulder angle
+   (x, y) = target position      a2 = elbow angle
+```
+
+Forward kinematics works left-to-right (angles → tip). Inverse kinematics runs it backwards (tip → angles) — which is the version you actually want when telling an arm "reach *there*".
+
 For a simple 2-link arm in 2D, the answer is a bit of trigonometry — law of cosines, `atan2`, that sort of thing. Most hobby robot arms live in 2D or have limited degrees of freedom, so the maths stays manageable with a few lines of Python.
 
 A typical 2-link solution looks something like this:

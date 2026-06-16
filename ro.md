@@ -33,6 +33,20 @@ The current version is **ROS 2**, a complete rewrite that fixes many limitations
 
 At its heart, ROS 2 uses a **publish/subscribe** model. A node that reads a LIDAR sensor publishes distance data to a topic. Another node subscribes to that topic and uses the data to avoid obstacles. The two nodes never need to know anything about each other — they just pass messages. This makes it easy to swap out components, test individual parts, and reuse code across different robots.
 
+Here's that idea drawn out. Each box is a **node** (a small program); the arrows carry messages over named **topics**. The nodes never talk directly — they only ever publish to, or subscribe from, a topic:
+
+```mermaid
+flowchart LR
+    LIDAR["LiDAR node"] -->|"publishes /scan"| SCAN(("/scan"))
+    SCAN -->|"subscribes"| NAV["Navigation node"]
+    CAM["Camera node"] -->|"publishes /image"| IMG(("/image"))
+    IMG -->|"subscribes"| NAV
+    NAV -->|"publishes /cmd_vel"| CMD(("/cmd_vel"))
+    CMD -->|"subscribes"| MOTOR["Motor driver node"]
+```
+
+Because every node only cares about the topics, you can unplug the LiDAR node and swap in a depth-camera node that publishes the same `/scan` topic — and the navigation node never even notices the change.
+
 You program ROS nodes in **Python** or C++. Python is the friendlier starting point, and the ROS 2 Python API (rclpy) is well documented.
 
 ## Why robot builders care

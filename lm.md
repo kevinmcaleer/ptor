@@ -34,6 +34,21 @@ What makes them exciting for robotics is their ability to interpret *intent*. In
 
 LLMs range from enormous cloud-hosted models (billions of parameters, running on server farms) to compact versions that fit on a Raspberry Pi 5.
 
+## From spoken word to robot action
+
+The reason LLMs are such a leap for robots is that they slot neatly between a microphone and the motors. Speech becomes text, the model works out what you *meant* and which tool to call, and that call drives the hardware:
+
+```mermaid
+flowchart LR
+    MIC["Microphone<br/>'go to the kitchen'"] --> STT["Speech-to-text"]
+    STT --> LLM["LLM<br/>(interprets intent,<br/>picks a tool)"]
+    LLM --> TOOL["Tool call<br/>e.g. drive_to('kitchen')"]
+    TOOL --> ROBOT["Robot acts<br/>(motors, servos)"]
+    ROBOT -->|"speaks result"| LLM
+```
+
+The clever bit is **tool use**: you define functions like `drive_forward()` or `read_distance()`, and the model decides when to call them. You no longer write an if/else tree for every phrase — the LLM maps free-form language onto the handful of actions your robot can actually do.
+
 ## Why robot builders care
 
 Until recently, giving a robot a conversational interface meant writing elaborate if/else trees or training your own classifier — both are significant projects. LLMs short-circuit all of that.

@@ -39,6 +39,20 @@ Most maker robots sit comfortably at Level 1–3, and that's where most of the f
 
 Autonomous behaviour usually combines several building blocks: **sensors** to perceive the world, a **decision loop** to work out what to do, **actuators** (motors, servos) to carry out the action, and often **feedback** like PID control to keep things on track.
 
+## The sense-think-act loop
+
+Every autonomous robot, however simple or clever, runs the same loop over and over: **sense** the world, **think** about what to do, **act** on it — then sense again to see what changed. That closed loop is the heart of autonomy:
+
+```mermaid
+flowchart LR
+    SENSE["Sense<br/>(read sensors)"] --> THINK["Think<br/>(decide / plan)"]
+    THINK --> ACT["Act<br/>(motors, servos)"]
+    ACT --> WORLD["World changes"]
+    WORLD --> SENSE
+```
+
+Your very first autonomous behaviour — "if the sensor reads under 10 cm, reverse and turn" — is this whole loop in one `if` statement. Everything more advanced (SLAM, path planning, vision) just makes the "think" box cleverer while the loop stays exactly the same.
+
 ## Why robot builders care
 
 Autonomy is the payoff. You spend hours soldering, printing parts, and writing code — and then you set your robot loose and watch it navigate a room by itself. That moment never gets old.

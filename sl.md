@@ -33,6 +33,22 @@ In practice, SLAM fuses data from sensors — most commonly a [LiDAR](/periodic-
 
 The maths behind it ranges from **particle filters** (used in ROS's gmapping) to **graph-based optimisation** (used in Cartographer and RTAB-Map). You don't need to master the maths to get results — but it helps to know that errors accumulate, and the algorithm is always correcting for drift.
 
+## The chicken-and-egg loop
+
+SLAM solves a circular problem: you need a map to know where you are, but you need to know where you are to build the map. It does both at once by feeding sensor scans and odometry into an estimate that refines *both* the map and the robot's pose every cycle:
+
+```mermaid
+flowchart LR
+    LIDAR["LiDAR / depth<br/>camera scan"] --> EST["SLAM estimate"]
+    ODO["Odometry<br/>(encoders, IMU)"] --> EST
+    EST --> MAP["Updated map"]
+    EST --> POSE["Updated pose<br/>(position +<br/>orientation)"]
+    MAP -->|"feeds back"| EST
+    POSE -->|"feeds back"| EST
+```
+
+Each new scan corrects a little of the drift that creeps into odometry, which is why the map gets sharper the more the robot explores — and why "loop closure" (recognising a place it's been before) is such a big moment for a SLAM system.
+
 ## Why robot builders care
 
 If you want a robot that can:

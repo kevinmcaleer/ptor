@@ -37,6 +37,22 @@ When a robot does all three at the same time, that's SLAM — Simultaneous Local
 
 At the simpler end, navigation can be as basic as wall-following: keep a fixed distance from the nearest wall and you'll eventually find your way out of a maze.
 
+## The three questions
+
+Navigation is really three questions answered together. *Where am I?* (localisation), *what's around me?* (mapping), and *how do I get there?* (path planning). The answers feed a motion controller that actually drives the robot:
+
+```mermaid
+flowchart LR
+    SENSORS["Sensors<br/>(LiDAR, encoders, IMU)"] --> LOC["Localisation<br/>where am I?"]
+    SENSORS --> MAP["Mapping<br/>what's around me?"]
+    LOC --> PLAN["Path planning<br/>(A*, Dijkstra)"]
+    MAP --> PLAN
+    GOAL["Goal<br/>(go to dock)"] --> PLAN
+    PLAN --> DRIVE["Motion control<br/>(drive the route)"]
+```
+
+Do localisation and mapping at the *same time* and you've got SLAM. Bolt path planning on top and the robot can be told "go to the charging dock" and route itself there around obstacles it discovers on the way.
+
 ## Why robot builders care
 
 Without navigation, your robot is blind to the big picture. It can react to immediate obstacles but it can't plan. Add navigation and suddenly your rover can be told "go to the charging dock" and actually do it. Your maze-solving robot can find the exit in seconds instead of wandering forever.

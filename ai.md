@@ -35,6 +35,23 @@ Artificial Intelligence is the broad field of making computers (and robots) beha
 
 You don't need a PhD. Modern tools have brought real AI within reach of a Raspberry Pi on your workbench.
 
+## The pieces of robot AI
+
+"AI" is an umbrella. For a robot builder it really means a handful of related tools that all sit under it — and they often stack together on one machine:
+
+```mermaid
+flowchart TB
+    AI["Artificial Intelligence"]
+    AI --> CV["Computer Vision<br/>(see & recognise)"]
+    AI --> ML["Machine Learning<br/>(learn from data)"]
+    AI --> LLM["LLMs<br/>(language & reasoning)"]
+    AI --> RULES["Rule-based logic<br/>(if / then trees)"]
+    ML --> NN["Neural Networks<br/>(deep learning)"]
+    CV --> NN
+```
+
+Pick one branch to start — computer vision is the most visual and rewarding — and you'll find the others connect to it naturally as your robot gets smarter.
+
 ## Why robot builders care
 
 A robot without intelligence is just a remote-control toy. Add AI and things get interesting. Your wheeled rover can stop before it falls off a table (object detection). Your robotic arm can sort components by colour (computer vision + classification). Your desktop companion can hold a conversation (LLMs running locally).

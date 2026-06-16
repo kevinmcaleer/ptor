@@ -32,6 +32,27 @@ The inspiration comes from nature: ants building bridges over gaps, bees finding
 
 A typical swarm robot is small and cheap. Think a robot the size of your palm, with a distance sensor, a couple of wheels, and a way to talk to its neighbours — infrared, Bluetooth, or a simple radio link. The magic is not in the hardware; it's in the algorithm.
 
+## Three simple rules
+
+Reynolds' classic Boids flocking model gets a whole swarm to move as one with just three local rules — each robot only looks at its near neighbours, yet coordinated motion *emerges* from the group:
+
+```
+   SEPARATION          ALIGNMENT           COHESION
+   don't crowd         steer the same      move toward the
+   neighbours          way as neighbours   group's centre
+
+      ●  ←→  ●           ● →                  ●   ●
+         ↑ ↓             ● →   →                ↘ ↙
+      keep apart         ● →                    ● ●
+                                              ↗
+                                          drift inward
+
+   No leader, no master plan — just every robot
+   following the same three rules locally.
+```
+
+Implement only those three behaviours on each robot and you'll see genuine emergent flocking — no central controller deciding anything.
+
 ## Why robot builders care
 
 Swarms are inherently resilient. Lose one robot to a flat battery or a broken wheel and the swarm keeps working — there's no single point of failure.

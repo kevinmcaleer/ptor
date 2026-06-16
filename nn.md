@@ -32,6 +32,36 @@ The clever part is *learning*. You show the network thousands of examples — "t
 
 Modern networks stack many layers on top of each other — that's where the term **deep learning** comes from. The type you'll meet most often as a robot builder is the **Convolutional Neural Network (CNN)** — brilliant at images, scanning for edges, shapes, and patterns.
 
+## How the layers connect
+
+Data enters the **input layer** (one node per feature — say, pixels), flows through one or more **hidden layers** where the weighted connections do the work, and a prediction emerges from the **output layer**. Every arrow carries a weight that training adjusts:
+
+```mermaid
+flowchart LR
+    subgraph IN["Input layer"]
+        I1(("pixel 1"))
+        I2(("pixel 2"))
+        I3(("pixel 3"))
+    end
+    subgraph HID["Hidden layer"]
+        H1(("●"))
+        H2(("●"))
+        H3(("●"))
+        H4(("●"))
+    end
+    subgraph OUT["Output"]
+        O1(("cat"))
+        O2(("not cat"))
+    end
+    I1 --> H1 & H2 & H3 & H4
+    I2 --> H1 & H2 & H3 & H4
+    I3 --> H1 & H2 & H3 & H4
+    H1 & H2 & H3 & H4 --> O1
+    H1 & H2 & H3 & H4 --> O2
+```
+
+Training is just the slow tuning of every one of those weights until the output node that should fire (here, "cat") lights up more strongly than the others for the right inputs.
+
 ## Why robot builders care
 
 A traditional robot checks conditions with if-statements: "if the sensor reads X, turn left." That works for simple tasks but breaks the moment the world gets messy.

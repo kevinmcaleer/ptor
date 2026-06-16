@@ -36,6 +36,21 @@ The three main flavours you'll meet in robotics are:
 - **Unsupervised learning** — the algorithm finds clusters or structure in unlabelled data. Useful for anomaly detection and mapping.
 - **Reinforcement learning** — the robot tries actions, gets rewards or penalties, and learns a policy. This is how many walking and balancing controllers are trained.
 
+## The workflow
+
+Every ML project, big or small, follows the same loop. You gather and label data, train a model on it, check how well it does, and only then deploy it to the robot — looping back to collect more data whenever it gets things wrong:
+
+```mermaid
+flowchart LR
+    DATA["Collect data<br/>(photos, readings)"] --> LABEL["Label it<br/>(cat / not cat)"]
+    LABEL --> TRAIN["Train model"]
+    TRAIN --> EVAL["Evaluate<br/>(is it good?)"]
+    EVAL -->|"not yet"| DATA
+    EVAL -->|"good enough"| DEPLOY["Deploy to<br/>the robot"]
+    DEPLOY --> PREDICT["Live predictions"]
+```
+
+The big mental shift from traditional coding is in the middle: you never write the rules yourself. The training step *learns* them from your labelled examples, which is exactly why messy, varied real-world data makes a stronger model.
 
 ## Why robot builders care
 

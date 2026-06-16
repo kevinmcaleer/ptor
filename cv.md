@@ -39,6 +39,21 @@ Common techniques include:
 - **Object detection** — identify and locate labelled objects (people, cups, obstacles)
 - **Pose estimation** — track the position of a human body or hand in 3D space
 
+## From pixels to meaning
+
+Computer vision is a stack of processing steps that turn a raw frame into something the robot can act on. A typical colour-tracking pipeline filters the image down to just the bits that matter, finds the blob, then works out where it is:
+
+```mermaid
+flowchart LR
+    FRAME["Raw frame<br/>(RGB pixels)"] --> HSV["Convert to HSV"]
+    HSV --> MASK["Colour mask<br/>(keep target hue)"]
+    MASK --> BLOB["Find contour /<br/>blob"]
+    BLOB --> POS["Centre position<br/>(x, y)"]
+    POS --> STEER["Steer robot<br/>toward it"]
+```
+
+Each stage throws away information you don't need so the next stage has less to chew on — which is exactly how a humble Raspberry Pi keeps up with live video.
+
 ## Why robot builders care
 
 A robot that can see is a robot that can react. Computer vision is the bridge between raw sensor data and meaningful decisions. It's how an autonomous rover avoids obstacles it's never encountered, how a robot arm picks the right component off a tray, and how a pet robot learns to follow you around the room.
