@@ -38,6 +38,23 @@ A few key ideas to know:
 - **Commit** — a saved snapshot with a short message describing what changed.
 - **Branch** — a separate line of development, so you can try things out without touching the main working code.
 
+## Commits and branches
+
+Each commit is a snapshot linked to the one before it, forming a history you can walk back through. A **branch** lets you spin off an experiment without disturbing `main`; when it works, you **merge** it back in:
+
+```
+   main:   A───B───C─────────────F   ← merge back in
+                    \           /
+   feature:          D───E─────╯
+                     (try a new sensor —
+                      main stays safe)
+
+   A,B,C,D,E,F = commits (snapshots)
+   each arrow points to the commit before it
+```
+
+If the experiment on the feature branch goes wrong, you just delete the branch — `main` was never touched. That safety net is exactly why you commit early and often.
+
 ## Why robot builders care
 
 When you're tuning a PID loop or rewriting your motor control code, things break. Without Git, a bad experiment can overwrite perfectly working code and you're left guessing what you changed. With Git, you just run `git checkout` and the broken version disappears.

@@ -37,6 +37,21 @@ A typical robotics data stack looks like this:
 - **Query** — you ask "show me every time the ultrasonic distance dropped below 10 cm"
 - **Act** — you spot a pattern and tune your avoidance code accordingly
 
+## The data pipeline
+
+That stack is a loop. A sensor produces a reading, Python stores it with a timestamp, you query the stored history to find patterns, and what you learn feeds back into better robot code:
+
+```mermaid
+flowchart LR
+    SENSOR["Sensor<br/>(reads value)"] --> STORE["Store<br/>(SQLite table:<br/>timestamp, value)"]
+    STORE --> QUERY["Query<br/>SELECT … WHERE<br/>distance < 10"]
+    QUERY --> INSIGHT["Spot a pattern"]
+    INSIGHT --> TUNE["Tune robot code"]
+    TUNE -.->|"better behaviour"| SENSOR
+```
+
+The smallest useful table is just three columns — `timestamp`, `sensor`, `value` — yet it turns "I think the robot got stuck around 3pm" into a query that tells you exactly what every sensor was reading at that moment.
+
 ## Why robot builders care
 
 Robots that log their sensor data are robots you can debug. Instead of guessing why your rover got stuck last Tuesday, you query the log and find out exactly what the IR sensor was seeing at the moment it stopped. Data also lets you train simple machine-learning models, spot hardware faults early (a motor that draws 20% more current than last week is about to fail), and share reproducible results with others.

@@ -37,9 +37,30 @@ Key facts worth knowing:
 - **Johnny-Five** — a popular Node.js library that lets you talk to Arduinos and Raspberry Pis with JS code.
 - **p5.js** — a creative coding library that makes it easy to build visual robot simulations and sensor displays.
 
+## How a JS dashboard fits in
+
+The killer use case is the **robot control dashboard**. JavaScript runs in the browser on your phone or laptop; the robot runs a small web server. Press a button and JS sends a request over WiFi; the robot acts and sends telemetry back to update the page:
+
+```mermaid
+flowchart LR
+    subgraph BROWSER["Browser (phone / laptop)"]
+        JS["JavaScript<br/>buttons, sliders,<br/>live telemetry"]
+    end
+    subgraph ROBOT["Robot"]
+        SERVER["Web server<br/>(MicroPython /<br/>Flask / Node.js)"]
+        HW["Motors, sensors"]
+    end
+    JS -->|"WiFi: commands<br/>(fetch / WebSocket)"| SERVER
+    SERVER -->|"telemetry"| JS
+    SERVER --> HW
+    HW --> SERVER
+```
+
+Because it's just a web page, any device with a browser becomes a control panel — no app to install, no app store, nothing to sign.
+
 ## Why robot builders care
 
-The killer use case is the **robot control dashboard**. You need sliders for motor speed, buttons for direction, live camera feeds, and real-time telemetry. Building that as a web page means any device with a browser — phone, tablet, laptop — becomes a control panel, with no app to install.
+You need sliders for motor speed, buttons for direction, live camera feeds, and real-time telemetry. Building that as a web page means any device with a browser — phone, tablet, laptop — becomes a control panel, with no app to install.
 
 Pair a small web server running on your robot (MicroPython, Flask, or Node.js) with a JavaScript front end, and you have a wireless remote control you built yourself. This combination shows up constantly in hobby robotics: a Raspberry Pi hosts the server, and your browser connects over WiFi.
 

@@ -34,6 +34,19 @@ What makes them special is control. You decide exactly how memory is used. You d
 
 The Arduino ecosystem is built on C/C++. When you write an Arduino sketch, you're writing C++ — the `setup()` and `loop()` functions, `digitalWrite()`, `Serial.print()`, all of it compiles down to native machine code that runs directly on the chip.
 
+## Compiled, not interpreted
+
+The reason C/C++ is so fast is that it's **compiled** ahead of time. Your source is translated once into raw machine code the chip runs directly — there's no interpreter sitting in the loop while the robot is running:
+
+```mermaid
+flowchart LR
+    SRC["C/C++ source<br/>(your sketch)"] -->|"compiler<br/>(once)"| BIN["Machine code<br/>(.hex / binary)"]
+    BIN -->|"upload"| CHIP["Runs directly<br/>on the chip"]
+    PY["Python source"] -.->|"interpreted<br/>line by line<br/>while running"| SLOW["Slower, needs<br/>an interpreter"]
+```
+
+That upfront compile step is why a C/C++ control loop can react in microseconds and fit in an Arduino Uno's 2 KB of RAM — there's no interpreter or garbage collector competing for time or memory.
+
 ## Why robot builders care
 
 Robots have hard real-time requirements. A motor controller that's even a few milliseconds late can cause a robot to wobble, overshoot, or crash. C/C++ lets you write code that responds in microseconds rather than milliseconds, with no garbage collector or interpreter getting in the way.

@@ -38,6 +38,20 @@ A few things worth knowing:
 - **"Free as in freedom", not just free of charge.** Some open source tools are free to download too, but the freedom to inspect and modify the source is the point.
 - **Forks and pull requests.** Open source projects live on platforms like GitHub. You can fork (copy) a project, improve it, and propose your changes back to the original maintainers.
 
+## How contributing works
+
+This is the loop that makes open source improve over time. You **fork** a project (take your own copy), make it better, then open a **pull request** asking the maintainer to merge your change back into the original — so everyone benefits:
+
+```mermaid
+flowchart LR
+    ORIG["Original project<br/>(e.g. SMARS)"] -->|"fork"| COPY["Your copy"]
+    COPY -->|"improve<br/>(fix bug, add part)"| BETTER["Your changes"]
+    BETTER -->|"pull request"| REVIEW["Maintainer reviews"]
+    REVIEW -->|"merge"| ORIG
+```
+
+The same loop runs in reverse too: someone else's fix flows back into the project you rely on. That's why an open design quietly gets better while you sleep — you're benefiting from contributors you'll never meet.
+
 ## Why robot builders care
 
 Almost every tool and framework you use as a maker is open source. That matters for three practical reasons.

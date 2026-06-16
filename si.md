@@ -38,6 +38,21 @@ Popular simulators include:
 
 A simulated robot can have the same code running on it as the real one — your navigation or arm-control code connects to virtual sensor topics just as it would on real hardware.
 
+## Same code, two bodies
+
+This is what makes simulation so powerful: your control code doesn't know or care whether it's talking to a physics engine or to real motors. The sensor topics and motor commands look identical, so you debug in the safe virtual world, then swap in the real robot unchanged:
+
+```mermaid
+flowchart TB
+    CODE["Your control code<br/>(navigation, PID, arm logic)"]
+    CODE -->|"motor commands"| SIM["Simulated robot<br/>(Gazebo physics)"]
+    CODE -->|"same commands"| REAL["Real robot<br/>(actual motors)"]
+    SIM -->|"virtual sensor data"| CODE
+    REAL -->|"real sensor data"| CODE
+```
+
+Crash the simulated robot into a wall a hundred times to tune your collision handling — it costs nothing but a restart. When the behaviour looks right, point the very same code at the real hardware.
+
 ## Why robot builders care
 
 Simulation saves time, money, and frustration in equal measure.

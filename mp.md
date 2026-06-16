@@ -32,6 +32,23 @@ MicroPython is a lean implementation of Python 3 designed to run on microcontrol
 
 You get a Python prompt (called the REPL) over USB, WiFi, or serial. Type a line of code, press Enter, and the hardware responds immediately. No compile step, no upload delay — just fast feedback.
 
+That instant loop is the big difference from a compiled language. With Arduino C++ you edit, compile, and upload before you see anything; with MicroPython's REPL you type a line and the hardware reacts on the spot:
+
+```mermaid
+flowchart LR
+    subgraph REPL["MicroPython REPL"]
+        T["Type a line"] --> R["Hardware reacts<br/>instantly"]
+        R --> T
+    end
+    subgraph COMPILED["Compiled (Arduino)"]
+        E["Edit"] --> CM["Compile"]
+        CM --> UP["Upload"]
+        UP --> RUN["See result"]
+    end
+```
+
+Being able to poke a sensor or wiggle a pin one line at a time — before committing it to a loop — is why beginners get hardware working so quickly with MicroPython.
+
 Common boards that support MicroPython include the Raspberry Pi Pico (and Pico W), the ESP32, and the BBC micro:bit. Most boards cost between £4 and £10.
 
 Memory is tight — a Pico has 264 KB of RAM — but that is plenty for motors, sensors, displays, and wireless comms. You can even import your own modules from the onboard flash.

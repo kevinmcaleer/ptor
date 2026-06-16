@@ -32,6 +32,19 @@ Linux is a free, open-source operating system kernel created by Linus Torvalds i
 
 Unlike Windows or macOS, Linux is built to be controlled from the command line. That might sound daunting, but it's actually what makes it so powerful for robotics. You can SSH into your robot from across the room, run scripts without a keyboard or screen attached, and schedule tasks to fire automatically on boot — all from a single terminal window.
 
+## Running headless
+
+The Linux superpower for robots is going **headless** — no monitor, keyboard or mouse attached. Your robot's Pi joins WiFi, and you control it entirely over **SSH** from your laptop on the same network:
+
+```mermaid
+flowchart LR
+    LAPTOP["Your laptop<br/>(terminal)"] -->|"SSH over WiFi"| PI["Robot's Raspberry Pi<br/>(Linux, no screen)"]
+    PI --> GPIO["GPIO: motors,<br/>sensors, camera"]
+    PI -.->|"command output<br/>back to terminal"| LAPTOP
+```
+
+This is what lets a robot drive around untethered while you sit at your desk running commands, editing code with `nano`, and installing libraries with `apt` — all through one terminal window.
+
 ## Why robot builders care
 
 Almost every serious robotics platform runs Linux under the hood:

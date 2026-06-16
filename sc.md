@@ -34,6 +34,27 @@ It runs entirely in your browser at [scratch.mit.edu](https://scratch.mit.edu) �
 
 Scratch is aimed at ages 8–16, but plenty of adults use it as a rapid prototyping tool or to teach others. The MIT community hosts millions of shared projects you can remix and learn from.
 
+## Blocks snap into a program
+
+You build a program by stacking blocks top to bottom — each one runs in order, and blocks like **forever** wrap around the ones inside them. Here's that first control loop drawn as the blocks themselves:
+
+```
+   ┌────────────────────────────┐
+   │ when [green flag] clicked   │
+   └────────────────────────────┘
+   ┌────────────────────────────┐
+   │ forever                     │
+   │  ┌───────────────────────┐  │
+   │  │ move (10) steps        │  │
+   │  └───────────────────────┘  │
+   │  ┌───────────────────────┐  │
+   │  │ if on edge, bounce     │  │
+   │  └───────────────────────┘  │
+   └────────────────────────────┘
+```
+
+That `forever` loop wrapping a `move` and an `if` is exactly the sense-act loop a real robot runs — you've written a control loop without typing a single semicolon.
+
 ## Why robot builders care
 
 Scratch teaches the core ideas of programming — sequences, loops, conditionals, variables, events — in a form where you can't make a syntax error. That means you spend your mental energy on *what you want the robot to do* rather than on where you forgot a closing bracket.

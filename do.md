@@ -39,6 +39,21 @@ Key ideas to know:
 - **Docker Hub** — a public registry where you pull ready-made images (Nginx, Python, ROS, etc.)
 - **docker-compose** — a tool to spin up multiple containers together with one command
 
+## Recipe to running container
+
+The flow is always the same: a `Dockerfile` (the recipe) is built into an **image** (the snapshot), and an image is run as one or more **containers**. Crucially, every container shares the host's kernel, so you can run several side by side on one Raspberry Pi without them clashing:
+
+```mermaid
+flowchart LR
+    DF["Dockerfile<br/>(the recipe)"] -->|"docker build"| IMG["Image<br/>(snapshot)"]
+    IMG -->|"docker run"| C1["Container:<br/>sensor service"]
+    IMG2["Image: web"] -->|"docker run"| C2["Container:<br/>dashboard"]
+    IMG3["Image: motors"] -->|"docker run"| C3["Container:<br/>motor control"]
+    C1 & C2 & C3 --> PI["One Raspberry Pi<br/>(shared kernel)"]
+```
+
+Each container is sealed in its own tidy environment, so the sensor service can need one Python version while the dashboard needs another — and neither trips over the other.
+
 ## Why robot builders care
 
 Robots run software that depends on specific library versions, GPIO drivers, or system packages. Docker locks all of that in. You can run your sensor-reading service, your web dashboard, and your motor controller as separate containers on the same Raspberry Pi — each in its own tidy environment, none of them clashing.
