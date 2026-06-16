@@ -38,6 +38,21 @@ Key specs for the standard build:
 - **Power:** Galleon LiPo via Pimoroni LiPo SHIM
 - **Code:** MicroPython
 
+## How the parts connect
+
+BurgerBot is a great example of how few parts a working robot really needs. The LiPo feeds power in, the Pico is the brain, the Motor SHIM drives the two wheels, and the ultrasonic sensor lets it see what's ahead:
+
+```mermaid
+flowchart LR
+    LIPO["LiPo battery<br/>(via LiPo SHIM)"] --> PICO["Raspberry Pi Pico<br/>(MicroPython)"]
+    PICO --> SHIM["Motor SHIM"]
+    SHIM --> ML["Left motor"]
+    SHIM --> MR["Right motor"]
+    US["Ultrasonic sensor<br/>(front)"] --> PICO
+```
+
+Two motors for differential drive, one sensor to avoid walls, and a Pico tying it together — that's the whole robot. Add a pen holder and the same platform becomes a drawing robot.
+
 ## Why robot builders care
 
 BurgerBot is a masterclass in "just enough". It has everything you need to learn the fundamentals — motor control, sensor reading, simple autonomy — without drowning you in complexity before you've started. Because the chassis is 3D printed, you can modify it: add a servo arm, swap the sensor, redesign the top plate. It's also Bluetooth-capable on the Pico W variant, so remote control is only a few lines of MicroPython away.

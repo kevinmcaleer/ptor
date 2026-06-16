@@ -30,6 +30,20 @@ A rover is a ground-based mobile robot that moves on wheels (or occasionally tra
 
 The word conjures images of NASA's Perseverance crawling across Martian rock, but your first rover is far more achievable than that. A basic rover needs just four things: a chassis to hold everything together, motors and wheels to move, a microcontroller to run your code, and a power source. That's genuinely it. Everything else — sensors, cameras, wireless control, autonomy — is optional and can be added later.
 
+Here's that minimal rover as a block diagram. These four blocks get you a driving robot; the dashed extras are what you bolt on as you grow:
+
+```mermaid
+flowchart LR
+    POWER["Power<br/>(battery)"] --> MCU["Microcontroller<br/>(your code)"]
+    POWER --> DRV["Motor driver<br/>(H-bridge)"]
+    MCU --> DRV
+    DRV --> MOTORS["Motors + wheels"]
+    MOTORS --> CHASSIS["Chassis<br/>(holds it all)"]
+    SENSE["Sensors / camera"] -.->|"optional"| MCU
+```
+
+Typical beginner rovers use two DC motors in a *differential drive* arrangement: speed up the left motor and the robot turns right, reverse it and the robot spins on the spot. This simple geometry is surprisingly capable and very easy to program.
+
 Typical beginner rovers use two DC motors in a *differential drive* arrangement: speed up the left motor and the robot turns right, reverse it and the robot spins on the spot. This simple geometry is surprisingly capable and very easy to program.
 
 ## Why robot builders care

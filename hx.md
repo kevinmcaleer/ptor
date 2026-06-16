@@ -32,6 +32,27 @@ A hexapod is a legged robot with six legs, each typically driven by two or three
 
 The real magic is stability. With six legs, a hexapod can always keep at least three on the ground while the others move. That **tripod gait** means no complex balancing algorithms needed — the geometry handles it. A four-legged robot (quadruped) has to solve a balancing problem; a hexapod just walks.
 
+Here's why the tripod gait is so stable. The six legs split into two interleaved tripods. While one tripod lifts and swings forward, the other three legs stay planted — and three planted feet always form a stable triangle the robot's weight sits inside:
+
+```
+        LEFT        RIGHT
+   front  L1 ────── R1            Tripod A: L1, R2, L3
+          |         |             Tripod B: R1, L2, R3
+   mid    L2 ──[body]── R2
+          |         |             Step 1: A planted, B swings
+   rear   L3 ────── R3            Step 2: B planted, A swings
+                                  …repeat → smooth walk
+
+   ● = planted (down)   ○ = lifted (swinging)
+
+      ● L1   R1 ○        ○ L1   R1 ●
+      ○ L2   R2 ●   →    ● L2   R2 ○
+      ● L3   R3 ○        ○ L3   R3 ●
+       tripod A down       tripod B down
+```
+
+Because three feet are always down forming a triangle, the robot never has to actively balance — it simply can't fall over mid-step.
+
 Most hexapods sit in the 150–300 mm body-width range for hobby builds, and the legs are usually 3D printed. You'll drive the servos from a microcontroller — a Raspberry Pi Pico, an ESP32, or a Raspberry Pi with a servo driver board.
 
 ## Why robot builders care

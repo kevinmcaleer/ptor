@@ -37,6 +37,30 @@ The key components are:
 - **Battery** — usually a 3S or 4S LiPo pack; weight and capacity are a constant trade-off
 - **Radio receiver** — takes your stick inputs and sends them to the flight controller
 
+## The four-motor layout
+
+A quadcopter's control trick is in how the four motors spin. **Diagonal pairs spin the same way** — two clockwise, two counter-clockwise — so their twisting forces cancel out and the craft doesn't spin on the spot. Change the balance of speeds and you get every movement:
+
+```
+        FRONT
+     M1 ↺      M2 ↻
+       \      /
+        \    /
+         [FC]        M1, M4 spin ↺ (CCW)
+        /    \       M2, M3 spin ↻ (CW)
+       /      \
+     M3 ↻      M4 ↺
+         REAR
+
+   All four equal      → hover
+   All four faster     → climb
+   Speed up rear pair  → pitch forward (fly ahead)
+   Speed up one side   → roll
+   Speed up one ↺ pair → yaw (spin to face a new way)
+```
+
+The flight controller runs a PID loop thousands of times a second, nudging individual motor speeds to hold the craft steady — far faster than any human could react.
+
 ## Why robot builders care
 
 Almost every skill you pick up on a ground robot transfers straight up into the air — and then gets harder, because nothing saves you if the software falls over.

@@ -30,6 +30,22 @@ A tank track — or continuous track — is a loop of linked segments that wraps
 
 On small robots you'll usually see two independent tracks, one on each side. Steering works by varying the speed (or direction) of each track — spin both forward and you go straight, slow one side and you turn, reverse one while the other goes forward and you spin on the spot. This is called **differential drive**, or skid steering, and it's the same principle used in full-size bulldozers.
 
+There's no steering servo at all — every manoeuvre comes from the *relative* speed of the two tracks:
+
+```
+   STRAIGHT        TURN LEFT       SPIN ON SPOT
+
+   L ▲   R ▲       L ▲   R ▲▲      L ▼   R ▲
+     │     │         │     │         │     │
+     └─►─┘           └──◜──┘        ◝  ↻  ◞
+   both same       right faster    one back,
+   speed, fwd      → curves left   one fwd → spins
+
+   ▲ = forward   ▲▲ = faster forward   ▼ = reverse
+```
+
+The catch is friction: spinning on the spot scrubs the tracks sideways against the floor, so a skid-steer turn always demands more motor torque than rolling straight.
+
 Track segments are typically driven by a DC motor through a simple gear train. The motor drives a sprocket, the sprocket meshes with the track, and the track loops around the idler wheel at the other end.
 
 ## Why robot builders care

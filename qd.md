@@ -30,6 +30,27 @@ A quadruped is any robot with four legs. In biology that covers dogs, cats, hors
 
 Most hobby quadrupeds use **three servos per leg** — one at the hip, one at the knee, and one at the shoulder — giving twelve servos total. Each leg can swing forward and back, lift and lower, and splay outwards. Coordinating all twelve servos in a smooth, stable sequence is what gait programming is all about.
 
+## The support triangle
+
+Here's the balancing problem a quadruped has to solve. When one leg lifts to step, the other three form a **support triangle**. The robot stays upright only as long as its **centre of mass** sits inside that triangle — so before lifting a leg, the robot first shifts its weight over the other three:
+
+```
+   All four down            Front-left lifted (○)
+
+   FL ●──────● FR           FL ○      ● FR
+      │ body │                   ╲    ╱│
+      │  ×   │  × = centre        ╲ × ╱ │   weight shifted
+      │ mass │      of mass        ╲ ╱  │   so × stays inside
+   RL ●──────● RR           RL ●───●────● RR
+                                  the support
+                                  triangle (3 feet)
+
+   × inside the triangle → stable
+   × outside it          → tips over
+```
+
+This is exactly why three servos per leg matters: the robot needs to lift, swing *and* shift weight sideways — and coordinating that across twelve servos is the heart of gait programming.
+
 Popular platforms include the [OpenCat](https://www.petoi.com) family of robot cats, Boston Dynamics' Spot (at the professional end of the scale), and homegrown designs like SMARS Quad and PicoCat. Microcontrollers from the Raspberry Pi Pico to full single-board computers can act as the brain.
 
 ## Why robot builders care

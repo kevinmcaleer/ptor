@@ -37,6 +37,29 @@ They come in many forms:
 
 Most accept G-code, SVG paths, or custom coordinate lists as input.
 
+## How a wall plotter finds a point
+
+The wall-plotter (polargraph) is the most surprising of the bunch. Two motors at the top corners pay out or reel in string; the pen gondola hangs where the two string lengths meet. To move the pen to a target point, the code works out the two string lengths that put it there:
+
+```
+   M1 ●─────────────────● M2     ← two stepper motors
+       \               /            (top corners)
+        \ L1        L2/
+         \           /
+          \         /
+           \       /
+            ● pen gondola
+          (hangs at the meeting
+           point of L1 and L2)
+
+   Want the pen at (x, y)?
+   → compute string lengths L1 and L2
+   → reel each motor to that length
+   → gondola settles at the target
+```
+
+It's the same idea as GPS trilateration, just with two strings instead of satellites — and watching a marker glide across a whiteboard tracing a path you coded is genuinely mesmerising.
+
 ## Why robot builders care
 
 Drawing robots punch well above their weight as learning tools. To make one work you need to understand servo or stepper control, coordinate systems, path planning, and — if you want anything more than a wiggly line — a bit of inverse kinematics. That is a huge slice of the robotics skill tree, all motivated by the very concrete goal of making something beautiful.

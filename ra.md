@@ -30,6 +30,27 @@ A robot arm is a chain of rigid links connected by joints, each joint driven by 
 
 Desktop robot arms built by makers typically span a reach of **150–400 mm** and use hobby servos rated from 1.8 kg·cm (SG90) up to 15+ kg·cm for the shoulder joint, which bears the most load.
 
+Here's how the joints chain together. Each joint adds one **degree of freedom (DOF)** — one more way the tip can move. A typical beginner arm has four: base rotation, shoulder, elbow, and a gripper at the end:
+
+```
+                          ┌─[ gripper ]   ← end effector
+                          │     (open/close)
+                   wrist ─●
+                        ╱
+                  elbow ●        each ● = a joint
+                       │          (one servo,
+            shoulder ──●           one DOF)
+                       │
+                  base ▼  ← rotates the whole arm
+              ════════════  bench
+
+   base + shoulder + elbow + gripper = 4 DOF
+   more joints = the tip can reach more
+   positions AND angles within its workspace
+```
+
+The shoulder bears the most load (it lifts everything above it), which is why it gets the beefiest servo.
+
 Controlling where the tip ends up from a set of joint angles is called **forward kinematics**. Working backwards — given a target position for the tip, calculate what angles each joint needs — is **inverse kinematics**. That second problem is where the maths gets genuinely interesting, and where a lot of the robot arm magic lives.
 
 ## Why robot builders care

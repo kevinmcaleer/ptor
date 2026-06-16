@@ -32,6 +32,27 @@ The engineering challenges stack up fast. A bipedal robot has to solve **dynamic
 
 A typical maker-scale humanoid uses **18–20 servo joints**: three per leg (hip, knee, ankle), three per arm (shoulder, elbow, wrist), plus a neck. Servo choice matters enormously — a servo that's fine for a robot arm can't hold a walking robot upright through a stride.
 
+Here's where those joints sit. Each ● is a servo; the legs carry the most demanding ones because they bear the robot's whole weight through every step:
+
+```
+                 ● neck
+              ┌──┴──┐
+       ● shoulder  shoulder ●
+         │  [ torso ]  │
+       ● elbow      elbow ●
+         │              │
+       ● wrist      wrist ●     each ● = 1 servo joint
+              ┌──┴──┐
+        ● hip        hip ●      legs: hip + knee + ankle
+          │            │        arms: shoulder + elbow + wrist
+        ● knee      knee ●      + 1 neck
+          │            │
+        ● ankle    ankle ●      ≈ 18–20 joints total
+        ▭ foot      foot ▭
+```
+
+The legs are where the real challenge lives: a bipedal robot is always on the edge of toppling, so it must shift its centre of mass over the planted foot with every single step — which is why leg servos need far more torque (and better control) than the arms.
+
 ## Why robot builders care
 
 Humanoids are the grand challenge of robotics for a reason. Almost every other element in this table feeds into one: servo control, inverse kinematics, PID loops, computer vision, AI, battery management, 3D printing, chassis design. Building even a simple bipedal robot forces you to understand how all those pieces interact.
