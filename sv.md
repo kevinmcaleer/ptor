@@ -33,6 +33,45 @@ The most common size is the **SG90 or MG90S** — a tiny 9g plastic-geared servo
 
 On a Raspberry Pi Pico or ESP32 you use a PWM output pin directly in MicroPython. For six or more servos, a dedicated driver board like the **PCA9685** handles all the PWM generation over I2C, freeing your microcontroller to think about higher-level logic.
 
+## The three wires
+
+A hobby servo has just three wires. The colours are near-universal — get them the right way round and you're ready to move:
+
+```
+   ┌──────────────┐
+   │    SERVO     │
+   └──┬───┬───┬───┘
+      │   │   │
+   ───┘   │   └───
+  Brown  Red  Orange
+  (GND)  (V+) (Signal)
+   −     4.8–6V  PWM from
+              your GPIO pin
+```
+
+## Pulse width sets the angle
+
+The clever part is in the **signal** wire. A pulse repeats every 20 ms (50 Hz), and the *width* of that pulse — not its frequency — tells the servo what angle to hold:
+
+```
+   1.0 ms pulse  →  0°        ┌─┐                    ┌─┐
+                              │ │                    │ │
+                          ────┘ └────────────────────┘ └────
+                              |←1.0ms→|←──── 20 ms ───→|
+
+   1.5 ms pulse  →  90°       ┌──┐                   ┌──┐
+   (centre)                   │  │                   │  │
+                          ────┘  └───────────────────┘  └───
+                              |←1.5ms→|
+
+   2.0 ms pulse  →  180°      ┌───┐                  ┌───┐
+                              │   │                  │   │
+                          ────┘   └──────────────────┘   └──
+                              |←2.0ms→|
+```
+
+Send 1.5 ms and the servo centres; sweep the width between roughly 1.0 ms and 2.0 ms and it tracks smoothly across its full range.
+
 ## Why robot builders care
 
 Servos are the foundation of almost every robot that has limbs. A quadruped needs at least eight. A pan-tilt camera mount needs two. A simple gripper needs one. Unlike a plain DC motor, a servo *remembers* where it's supposed to be — there's no need to count encoder pulses or run a separate control loop.

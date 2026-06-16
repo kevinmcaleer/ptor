@@ -37,6 +37,35 @@ Key specs to know:
 
 The common driver chips — **A4988** and **DRV8825** — reduce the job to two control pins: one for direction, one for pulses. Each pulse advances the motor one step.
 
+## How it steps
+
+Inside the motor are coils the driver energises in a repeating sequence. Each change in the pattern tugs the rotor one step further round. This four-step full-step pattern is the basics of it (the driver chip handles it for you):
+
+```
+   Step   Coil A   Coil B      One STEP pulse = one move
+   ────   ──────   ──────
+    1       +        off
+    2      off        +        Reverse the order (or flip
+    3       −        off       the DIR pin) and the motor
+    4      off        −        steps the other way.
+    ↺  back to step 1
+```
+
+## Wiring the driver
+
+You don't drive those coils directly — an A4988 or DRV8825 board does the heavy lifting. From your microcontroller you only need two signal pins: **STEP** (pulse it once per step) and **DIR** (high or low to choose direction):
+
+```mermaid
+flowchart LR
+    GPIO1["GPIO → STEP"] --> DRV["A4988 /<br/>DRV8825"]
+    GPIO2["GPIO → DIR"] --> DRV
+    PSU["Motor supply<br/>(e.g. 12 V)"] --> DRV
+    DRV --> COILS["Stepper coils<br/>(A+ A− B+ B−)"]
+    COILS --> MOTOR["NEMA 17<br/>200 steps/rev"]
+```
+
+Pulse STEP 200 times and a standard NEMA 17 turns exactly one full revolution. No encoder, no feedback loop — the count *is* the position.
+
 ## Why robot builders care
 
 Precision is the superpower here. A DC motor with an encoder can tell you *roughly* where it is. A stepper motor just *is* where you told it to be — no feedback loop required.

@@ -36,6 +36,25 @@ A battery is an electrochemical device that stores energy and releases it as ele
 
 A useful rule of thumb: **capacity (mAh) tells you how long; voltage tells your motors how fast**.
 
+## Series and parallel
+
+How you wire multiple cells decides what you get. Stack them in **series** and the voltages add (capacity stays the same). Wire them in **parallel** and the capacities add (voltage stays the same). The schematic symbol for a cell is a long line (+) and a short line (−):
+
+```
+   SERIES — voltage adds            PARALLEL — capacity adds
+
+    +─┤├──┤├──┤├─ −                   +─┬──┤├──┬─ −
+      3.7  3.7  3.7                     │      │
+                                        ├──┤├──┤
+   3 × 3.7 V = 11.1 V  (3S)             │      │
+   capacity unchanged                   └──┤├──┘
+                                     all 3.7 V, 3× the mAh
+
+      long line = +   short line = −
+```
+
+A "3S" LiPo is three cells in series (11.1 V nominal); a "2P" pack is two cells in parallel for double the run-time. Many packs combine both — a "3S2P" gives you the higher voltage *and* the bigger capacity.
+
 ## Why Robot Builders Care
 
 Every component in your robot — microcontroller, motors, servos, sensors — draws current. Motors are the hungry ones. A stall current spike from a pair of DC motors can be five to ten times the running current, so a battery that looks adequate on paper can sag into a low-voltage reset at exactly the wrong moment.

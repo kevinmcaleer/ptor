@@ -42,6 +42,30 @@ The logic is beautifully simple:
 
 Add PWM on the enable pin and you also control speed.
 
+## The H shape
+
+The name comes from the layout: four switches (S1–S4) and the motor across the middle bar form a letter **H**. Close one *diagonal* pair and current runs through the motor one way; close the other diagonal and it runs the other way:
+
+```
+        +V                          +V
+         │                           │
+     ┌───┴───┐                   ┌───┴───┐
+    S1       S2                 S1       S2
+   (ON)     (off)              (off)    (ON)
+     │       │                   │       │
+     ●──[M]──●                   ●──[M]──●     current
+     │  →→→  │                   │  ←←←  │     reverses
+    S3       S4                 S3       S4
+   (off)    (ON)                (ON)    (off)
+     │       │                   │       │
+     └───┬───┘                   └───┬───┘
+        GND                         GND
+
+   FORWARD: S1 + S4 on          BACKWARD: S2 + S3 on
+```
+
+One golden safety rule: never switch on both switches on the *same side* (S1 + S3, or S2 + S4) at once — that's a "shoot-through" short straight from +V to ground that can destroy the chip. The driver ICs guard against this for you, which is exactly why you reach for an L298N or DRV8833 rather than wiring four loose transistors.
+
 ## Why robot builders care
 
 Every wheeled or tracked robot needs to go both ways. A microcontroller GPIO pin can source maybe 8–16 mA — nowhere near enough to drive a DC motor directly, and it can't reverse current at all. The H-bridge solves both problems: it amplifies the tiny GPIO signal into amps of motor current, and the four-switch topology lets you flip polarity instantly.

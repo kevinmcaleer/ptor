@@ -37,6 +37,35 @@ Key specs to know:
 - **RPM** — revolutions per minute at rated voltage, with or without the gearbox
 - **Torque** — measured in mN·m or kg·cm; bigger numbers mean more pushing power
 
+## The symbol and terminals
+
+A DC motor is delightfully simple — just two terminals. On a schematic it's an **M** in a circle. Swap which terminal is positive and the shaft reverses:
+
+```
+        +  ┌─────┐  −
+   ───────┤  M  ├───────
+           └─────┘
+        terminal A   terminal B
+
+   + on A, − on B  →  spins forward
+   + on B, − on A  →  spins backward
+```
+
+## How you control it
+
+Two wires alone only give you "full speed, one direction". The pairing that gives a robot real control puts an **H-bridge** between the microcontroller and the motor (for direction) and feeds it a **PWM** signal (for speed):
+
+```mermaid
+flowchart LR
+    GPIO["GPIO pins<br/>(DIR + PWM)"] --> HB["H-bridge<br/>driver"]
+    BATT["Battery"] --> HB
+    HB --> MOTOR["DC Motor<br/>(M)"]
+    HB -->|"direction"| MOTOR
+    HB -->|"speed (PWM)"| MOTOR
+```
+
+Direction comes from which way the H-bridge sends current; speed comes from how much of the time the PWM signal is switched on. Together they let three GPIO pins drive a motor anywhere from a gentle crawl to flat-out, forwards or backwards.
+
 ## Why robot builders care
 
 Wheels need DC motors. Tank tracks need DC motors. Robot arms, conveyor belts, spinning sensors — most of them come back to a DC motor somewhere in the chain.
