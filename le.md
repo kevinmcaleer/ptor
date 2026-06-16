@@ -34,6 +34,23 @@ The current line-up includes **SPIKE Prime** (aimed at schools, uses the same 6-
 
 Standard LEGO bricks follow a precise 8mm pitch system. Studs are 4.8mm in diameter, blocks measure 15.8 × 31.8mm. That predictability is what makes LEGO a genuine engineering tool, not just a toy.
 
+## The brick dimension system
+
+This is what turns LEGO from a toy into an engineering kit: every dimension is a precise, repeatable multiple. Studs sit on an **8 mm grid**, so any part lines up with any other — and that same grid is what you replicate when 3D-printing LEGO-compatible parts:
+
+```
+        ┌──8mm──┬──8mm──┬──8mm──┐
+        ●       ●       ●       ●   ← studs
+        │  (4.8mm dia)          │
+        │                       │
+       9.6mm   one brick        │   brick height = 9.6 mm
+        │      = 2 studs        │   (3 plates stacked)
+        └───────────────────────┘
+        stud pitch = 8 mm (centre to centre)
+```
+
+Because the spacing is exact, a Technic beam, a motor mount, and a custom 3D-printed bracket all share the same grid — which is why you can mix printed parts straight into a LEGO build without anything binding.
+
 ## Why robot builders care
 
 LEGO removes almost every barrier to experimentation. You can prototype a chassis in ten minutes, test it, pull it apart, and rebuild it differently — no drilling, no cutting, no waiting for prints. That fast feedback loop teaches mechanical intuition in a way that staring at a screen never can.

@@ -33,6 +33,21 @@ CAD stands for **Computer-Aided Design**. It's the process of creating precise 2
 
 For robot builders, CAD typically means **3D parametric modelling** — you define shapes using dimensions and constraints, so changing one number (say, a motor mounting hole diameter) updates the entire model automatically. Popular tools include **Fusion 360** (free for hobbyists, cloud-based, very capable), **FreeCAD** (fully open source, runs locally), and **Onshape** (browser-based, free tier available).
 
+## The sketch-to-solid workflow
+
+Almost every part follows the same core loop: draw a 2D **sketch**, **extrude** it into a 3D solid, combine parts into an **assembly** to check the fit, then **export** for fabrication. Because it's parametric, changing one dimension ripples through the whole model:
+
+```mermaid
+flowchart LR
+    SKETCH["2D sketch<br/>(constrained<br/>by dimensions)"] --> SOLID["Extrude /<br/>revolve to 3D"]
+    SOLID --> ASSY["Assembly<br/>(check parts<br/>fit together)"]
+    ASSY --> EXPORT["Export<br/>STL → print<br/>DXF → laser cut"]
+    EXPORT -.->|"tweak a number,<br/>regenerate"| SKETCH
+    ASSY -.->|"clash? edit"| SKETCH
+```
+
+That dashed feedback arrow is the whole point of parametric CAD: the motor shaft turns out to be 5 mm not 4 mm, you change one number, and every dependent feature updates — no redrawing from scratch.
+
 ## Why robot builders care
 
 Almost every custom robot needs at least one bespoke part: a chassis plate, a bracket to hold a sensor at the right angle, a gear with a specific tooth count, a wheel hub. Without CAD you're guessing dimensions, cutting and reprinting repeatedly, and wasting both filament and time.

@@ -33,6 +33,22 @@ The key challenge is size and power. Components need to be small enough to wear 
 
 Addressable RGB LEDs — NeoPixels in the Adafruit world, WS2812B by their chip name — are the workhorses of wearable making. A single data pin drives a whole strip of individually controllable full-colour LEDs. You can stitch flexible LED strips into fabric, hot-glue them to helmets, or weave them into a prop.
 
+## How NeoPixels chain together
+
+The clever part is that one GPIO pin controls *every* LED. Each NeoPixel has a data-in and a data-out; data flows in, the first pixel grabs its own colour and passes the rest along to the next. Wire them in a chain and a single pin drives the whole strip:
+
+```
+   GPIO ──DIN─▶[LED 1]──DOUT─▶[LED 2]──DOUT─▶[LED 3]──▶ …
+   (one data pin)   │            │            │
+                    └── each grabs its colour, forwards
+                        the rest down the chain
+
+   Power them from their own 5 V rail, not the GPIO pin —
+   a full strip can pull more current than a board can give.
+```
+
+That one-pin-many-LEDs trick is why a tiny board like a Pico can light up a whole jacket or helmet — and the same wiring works for a single ring of 5 pixels or a strip of 150.
+
 ## Why robot builders care
 
 Wearable projects teach you the same skills as robot building, just in a more personal form factor. You learn to manage power budgets, deal with cramped wiring, write sensor-driven code, and think about how a user actually interacts with the device — all skills that transfer directly back to wheeled robots and arms.

@@ -37,6 +37,30 @@ The two filaments you'll reach for most often are:
 
 A typical desktop FDM printer has a build volume around 220 × 220 × 250 mm and a layer height of 0.2 mm. That's more than enough for most robot chassis, brackets, mounts, and enclosures.
 
+## From model to part
+
+A print always travels the same path: you design (or download) a 3D model, export it as an **STL**, run it through a **slicer** that turns it into machine instructions (G-code), and the printer builds it up one layer at a time:
+
+```mermaid
+flowchart LR
+    CAD["3D model<br/>(CAD)"] --> STL["Export STL"]
+    STL --> SLICE["Slicer<br/>(Cura / PrusaSlicer)<br/>→ G-code"]
+    SLICE --> PRINT["Printer<br/>builds layer<br/>by layer"]
+    PRINT --> PART["Finished part"]
+```
+
+The "layer by layer" bit is the heart of FDM. A heated nozzle lays down a thin line of molten plastic, the bed (or nozzle) steps up by one layer height, and it repeats — stacking 0.2 mm slices until a flat cross-section has grown into a solid 3D part:
+
+```
+   nozzle ──▶ ═══════════   ← layer being printed now
+              ───────────   ← 0.2 mm layers already
+              ───────────     laid down and cooled
+              ───────────
+   ═══════════════════════   ← print bed
+```
+
+This is why overhangs need support and why orientation matters — each layer can only rest on the one beneath it.
+
 ## Why robot builders care
 
 Almost every custom robot you see on kevsrobots.com has 3D printed parts in it. Brackets rarely come off the shelf in the right shape. Motor mounts need to be exactly the right distance apart. Servo horn extensions have to fit your specific design.

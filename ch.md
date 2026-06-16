@@ -38,6 +38,30 @@ Key things a chassis design has to get right:
 - **Battery compartment** — accessible enough to swap cells, secure enough that nothing shifts mid-run.
 - **Sensor positions** — clear sight lines and the right mounting angles.
 
+## A chassis from above
+
+Here's a typical two-wheel-drive chassis seen from the top. Everything has a planned home, the heavy battery sits low and central to keep the robot stable, and the sensor faces forward with a clear line of sight:
+
+```
+              FRONT
+        ┌───[ sensor ]───┐
+        │                │
+   ╔════╪════╗      ╔════╪════╗
+   ║ L  ║    │      │    ║  R ║   ← motors +
+   ║motor    │      │    motor║     wheels
+   ╚════╪════╝      ╚════╪════╝
+        │   ┌──────────┐    │
+        │   │ battery  │    │   ← low & central
+        │   │ (heavy)  │    │     = low centre
+        │   └──────────┘    │      of gravity
+        │  [ controller +   │
+        │    driver board ] │   ← electronics bay
+        └───────────────────┘
+              REAR
+```
+
+Track width is the side-to-side wheel spacing; wheelbase is front-to-back. Widen the track and the robot is harder to tip; shorten the wheelbase and it turns in a tighter circle.
+
 ## Why robot builders care
 
 A poorly designed chassis causes headaches that no amount of clever code can fix. Motors that aren't properly aligned create steering drift. Electronics crammed in with no airflow run hot. A frame that flexes under load makes sensor readings noisy.

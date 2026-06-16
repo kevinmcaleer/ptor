@@ -37,6 +37,35 @@ You design your parts as vector files (SVG or DXF), set the laser's speed and po
 
 Watch out for **kerf** — the sliver of material the laser removes along the cut line. For tight-fitting joints, offset your design by about 0.1–0.2 mm depending on your machine.
 
+## From vector to part
+
+The workflow is short. You draw your parts as flat vector outlines, set the beam's speed and power, and the machine traces those lines — cutting all the way through or engraving the surface:
+
+```mermaid
+flowchart LR
+    DESIGN["Vector design<br/>(SVG / DXF)"] --> SET["Set speed +<br/>power (LightBurn)"]
+    SET --> CUT["Laser traces<br/>the lines"]
+    CUT --> PARTS["Flat parts<br/>(ready to assemble)"]
+```
+
+## Finger joints and kerf
+
+Because you're working in 2D, flat parts are joined with interlocking **finger joints** — tabs on one piece slot into matching slots on another, turning flat sheet into a rigid 3D box. The catch is **kerf**: the laser burns away a thin sliver, so a tab cut to exact size ends up loose:
+
+```
+   Piece A          Piece B          Joined
+
+   ┌─┐ ┌─┐ ┌─┐                       ┌─┬─┬─┬─┐
+   │ └─┘ └─┘ │      │ ┌─┐ ┌─┐ │      │ │ │ │ │
+   tabs            slots            tabs slot in
+
+   kerf = the ~0.1–0.2 mm the beam removes.
+   Offset tabs slightly OVERSIZE so they
+   press-fit snugly instead of rattling.
+```
+
+Get the kerf offset right once for your machine and material, and every flat-pack design after that just clicks together.
+
 ## Why robot builders care
 
 Laser cutting gives you structural parts that are light, flat, and accurate. Chassis plates, motor mounts, standoffs, cable guides, and decorative panels all come out cleanly with edges you'd struggle to achieve by hand.

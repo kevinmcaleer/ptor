@@ -37,6 +37,40 @@ Common wheel styles for robot builders:
 
 Wheel diameter directly affects speed and torque. A bigger wheel covers more ground per revolution (faster) but needs more torque to get moving. A smaller wheel gives you more pushing force but lower top speed.
 
+## Standard, omni and mecanum
+
+What sets the three drive wheels apart is the **rollers around the rim**. A standard wheel has none (it only rolls forwards/back). An omni wheel adds rollers facing sideways so it can also slide left/right. A mecanum wheel sets its rollers at 45°, which is what gives a robot full diagonal and strafing movement:
+
+```
+   Standard          Omni              Mecanum
+   (no rollers)      (rollers ⟂)       (rollers at 45°)
+
+     ┌────┐          ┌─╫──╫─┐          ┌─╲──╲─┐
+     │    │          │      │          │      │
+     │    │          ╪      ╪          ╲      ╲
+     │    │          │      │          │      │
+     └────┘          └─╫──╫─┘          └─╲──╲─┘
+
+   forward/back     + sideways         + diagonal /
+   only             slide              strafe + spin
+```
+
+## Bigger versus smaller
+
+Wheel size is a straight trade-off between speed and pushing power, because the same motor torque acts over a different radius:
+
+```
+   Small wheel              Large wheel
+
+      ( ● )                  (   ●   )
+   more torque,           more speed,
+   less speed             less torque
+   (good on carpet,       (good on smooth
+    climbing)              floors, distance)
+```
+
+For a differential-drive robot, fixing the wheel diameter also fixes the maths between motor revolutions and distance travelled — which is exactly what you need once you start writing navigation code.
+
 ## Why robot builders care
 
 Wheel choice is one of the first real design decisions you make. Get it wrong and your robot either spins on the spot (not enough grip), strains its motors (too heavy), or can't handle the surface (too small for carpet, too wide for tight corridors).
